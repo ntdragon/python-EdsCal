@@ -1,0 +1,78 @@
+/* -------------------------------------------------------------------------------------------------------------------------------
+website.css
+Edward Birdsall custom css for website
+---------------------------------------------------------------------------------------------------------------------------------*/
+ 
+body{}
+
+#header {
+     display: block;
+     width: 99%;
+     height: 120px;
+     top: 5px; left: 5px;
+     position: fixed;
+     border: 3px solid navy;
+     float: left;
+     background-color: aqua;
+}
+
+#header-left { width = 110px;
+     position: absolute;
+     top: 0px; left: 5px;}
+#header-center {text-align: center;}
+#header-right { width = 110px; 
+     position: absolute;
+     top: 0px; right: 5px; }
+
+#nav { width: 10%;
+     display: inline-block;
+     position: fixed;
+     top: 135px; left:0px;
+     bottom: 125px;
+     background-color: aqua;
+}
+
+#footer {
+     display: block;
+     width: 99%;
+     height: 120px;
+     border: 3px solid navy;
+     position: fixed;
+     bottom: 0px; left: 0px;
+     background-image: url(gfx/BG_BAR92.GIF);
+     background-size: cover;
+     background-color: aqua;
+}
+
+#footer-left { width = 110px;
+     position: absolute;
+     bottom: 0px; left: 0px;}
+
+#footer-center  {width = 310px;
+     margin-top: 10px;
+     text-align: center;
+     bottom: 0px;
+     display: block;
+
+     position: static;
+}
+
+#footer-right { width = 110px;
+     position: absolute;
+     bottom: 0px; right: 10px; }
+
+#main {
+           overflow: scroll;
+          display: block; 
+          position: absolute; 
+          top: 150px; 
+          right:0px; left: 0px;
+          bottom: 125px ; 
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
