@@ -48,7 +48,7 @@ calbt[21] = "President's Day"
 
 input_ = {"hd":hd, "hdr":hdr, "cal":cal, "dnum":dnum, "colorsm":colorsm, "colorsc":colorsc, "bgtclr":bgtclr, "bgeclr":bgeclr, "pref":pref, "days":days, 'calat':calat, 'calbt':calbt, 'calct':calct, 'caldt':caldt,'calet':calet, 'calst':calst}
 env = Environment(loader = FileSystemLoader("."))
-template=env.get_template("calendar3.html")
+template=env.get_template("mcalendar.jhtml")
 
 output = template.render(input_ )
 

@@ -1,0 +1,1128 @@
+Calendar Notes
+
+*Main
+*-----
+* See what was passed as arguements and then do it
+*	Options
+*   -------
+*   day print - then exit
+*   input calendar invite then exit
+*   engage graphical user interface
+* exit
+*******************************************************************************
+*Day Print
+*----------
+* Input Calendar(s)
+* Determine day schedule and which calendars to print
+* Print calendar
+* Exit
+*******************************************************************************
+* Calendar invite input
+*----------------------
+* Input invite
+* Input calendars
+* Add invite to appropriate calendar
+* ouptput updated calendar
+* exit
+*******************************************************************************
+Shire calendar routines
+
+
+
+Alt calendar
+
+
+#Chinese Zodiac animals
+
+
+Calendar - c
+
+
+int Gregorian_2_Julian(int month, int day, int year)
+{
+}
+
+date Julian_2_Gregorian(int day, int year)
+{
+}
+
+struct date
+	int month
+	int day
+	int year
+end struct
+
+date Julian_2_Hobbit(int day, int year)
+int Hobbit_2_Julian(int month, int day, int year)
+
+int day_of_week_Gregorian(date)
+int day_of_week_Hobbit(date)
+int day_of_week_Julian(date)
+
+Appointment_by_day()
+Appointment_by_date()
+
+Display_week
+Display_day
+
+
+
+/* Calendar systems                                                           */
+/* ----------------                                                           */
+/* ----- -----                                                                */
+/* ----- -----                                                                */
+/* ----- -----                                                                */
+/* ----- -----                                                                */
+
+
+
+
+**********************************************************************************    
+Internal date:time format is Julian GMT -  year:day:sssss.sss
+time zones internal sssss
+/* */
+sub time2zulu { }
+/* This subroutine converts a zone julian date:time to zulu given original date:time and time zone
+Algorithm:
+	add time to original
+	if time > 86400 then subtract 86400 from time and increment date
+	if time < 0000 then add 2400 to time and decrement date
+	if day > year's end then date=1 and increment year
+	if day < 1 then day=1 and decrement year
+/* */	
+sub zulu2time { }
+This subroutine converts a zulu date:time to zone given zulu date:time and time zone
+Algorithm:
+	subtract time from zulu
+	if time > 2400 then subtract 2400 from time and increment date
+	if time < 0000 then add 2400 to time and decrement date
+	if day > year's end then date=1 and increment year
+	if day < 1 then day=1 and decrement year
+/* */
+int Gregorian2Julian();
+/* This subroutine converts a Gregorian date to a Julian date                */
+Algorithm:
+	Determine if leap year and use appropriate month set
+	determine integer month
+	return day = day of month plus sum of previous months
+
+sub Julian2Gregorian { }
+This subroutine converts a Julian date to a Gregorian date
+Algorithm:
+	Determine if leap year and use appropriate month set
+	While day !inMonth increment month
+	Return Gregorian Date
+/* */
+sub Shire2Julian { }
+This subroutine converts a Shire date to a Julian date
+Algorithm:
+	If special day then set value and return day
+	Determine if leap year and use appropriate year set
+	determine integer month
+	return day = day of month plus sum of previous months
+/* */
+sub Julian2Shire { }
+This subroutine converts a Julian date to a Shire date
+Algorithm:
+	Determine if leap year and use appropriate year set
+	If special day then return Shire date by table
+	While day !inMonth increment Month
+	return Shire date
+/* */
+sub ShireDayofWeek { }
+This subroutine returns the number of the day of week 0:7 given a Shire date
+Algorithm:
+/* */
+sub GregorianDayofWeek { }
+This subroutine returns the number of the day of week 1:7 given a Gregorian Date
+Algorithm:
+/* */
+sub isLeap { }
+This returns True if LeapYear otherwise False
+Algorithm:
+	if year mod 4  0 then return False
+	if year mod 4 = 0 and year mod 400 = 0 return True
+	if year mod 4 = 0 and year mod 100  0 return True else False
+/* */
+sub time2secs { }
+This subroutine converts 24 hour time to seconds from midnight
+Algorithm:
+/* */
+sub secs2time ( )
+This subroutine converts seconds from midnight to 24 hour time
+Algorithm:
+	ss.sss = secs mod 60
+	hour = trunc(secs - ss.sss)/3600
+	minutes = ((secs - ss.sss) - (hour*3600))/60
+/* */
+sub 12convert24
+This sub converts a 24 hour time to 12 hour time
+Algorithm:
+	if hh < 13 return time + 'a.m.'
+		else hh -= 12 and return time + 'p.m.'
+/* */
+sub 24convert12
+This sub converts a 12 hour time to 24 hour time
+Algorithm:
+	if 'a.m.' return time else hh += 12 and return time
+/* */
+sub deltaDates
+This subroutine determines the delta time between two dates
+Algorithm
+	Determine the greater date
+	subtract from the greater date the lesser date
+		subtract seconds and make necessary day corrections
+		subtract days and make any necessarey year corrections
+		subtract years
+	return delta time
+
+sub dateDelta
+This subroutine computes the new date given the original date and delta time
+Algorithm
+	add delta time to date making corrections as necessary
+	return new date
+Calendar - c
+
+
+/* */
+int Gregorian_2_Julian(int month, int day, int year)
+
+/* */
+date Julian_2_Gregorian(int day, int year)
+
+
+struct date
+	int month
+	int day
+	int year
+end struct
+
+date Julian_2_Hobbit(int day, int year)
+int Hobbit_2_Julian(int month, int day, int year)
+
+int day_of_week_Gregorian(date)
+int day_of_week_Hobbit(date)
+int day_of_week_Julian(date)
+
+Appointment_by_day()
+Appointment_by_date()
+
+Display_week
+Display_day
+
+Boolean isaLeapYear(int year)
+
+*/
+# calendar routines in C
+
+
+
+struct edate {
+    float   secs;    /* seconds from midnight  0->86399 */
+    short   days;    /* days in year 1->365 or 366      */
+    int     year;    /* year                            */
+    float   zone;    /* time zone -12->+12              */
+} edate;
+
+struct gdate {
+    float   secs;
+    short   hour;
+    short   day;
+    int     year;
+    float   zone;
+} gdate;
+
+    edate   itime,etime;
+    
+enum Gdow {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
+enum GMon {January, February, March, April, May, June, July, August, September, October, November, December}
+enum Gry {31,28,31,30,31,30,31,31,30,31,30,31}
+enum Gly {31,29,31,30,31,30,31,31,30,31,30,31}
+
+}
+
+int time2zulu (edate itime, edate ftime&);
+.........1.........2.........3.........4.........5.........6.........7.........8
+/* -------------------------------------------------------------------------- */
+/* Convert a time from a local time zone to Greenwich Mean Time (Zulu)        */
+/* v1.0 eab 12/2000                                                           */
+/* Algorithm:                                                                 */
+/*     First set the max number of days in the year by using isleap           */
+/*     Now add the seconds for time zone correction to current seconds        */
+/*     Now we do a series of checks to see if we changed to a different day   */
+/*          If so we update the day and seconds, then see if that changes the */
+/*          year and if so update the day and year accordingly                */
+/* -------------------------------------------------------------------------- */
+
+int zulu2time (edate itime, float newzone, edate ftime&);
+/* -------------------------------------------------------------------------- */
+/* Convert a Zulu time to anothor local time zone                             */
+/* v1.0 eab 12/2000                                                           */
+/* Algorithm:                                                                 */
+/*     First set the max number of days in the year by using isleap           */
+/*     Now subtract the seconds for time zone correction to current seconds   */
+/*     Now we do a series of checks to see if we changed to a different day   */
+/*          If so we update the day and seconds, then see if that changes the */
+/*          year and if so update the day and year accordingly                */
+/* -------------------------------------------------------------------------- */
+
+int Gregorian2Julian (gdate itime, edate ftime&);
+/* -------------------------------------------------------------------------- */
+/* Convert a Gregorian date to a Julian date                                  */
+/* v1.0 eab 12/2000                                                           */
+/* Algorithm:                                                                 */
+/*      First determine if the year is a leap year and set days/month array   */
+/*                                                                            */
+
+gdate Julian2Gregprium (edate itime)
+{
+}
+
+edate Shire2Julian (sdate itime)
+{
+}
+
+sdate Julian2Shire (edate itime)
+{
+}
+
+string ShireDayofWeek()
+string GregorianDayofWeek()
+
+
+float secs2time()
+float time2secs()
+nn 12convert24
+nn 24convert12
+nn deltaDates(edate itime, edate ftyme)
+Functions
+    FromGregorian
+    ToGregorian
+    GregorianDayofWeek
+    FromShire
+    ToShire
+    ShireDayofWeek
+    
+    SecsTo24
+    SecsTo12
+    SecsTo10
+    SecsFrom24
+    SecsFrom12
+    SecsFrom10
+    
+    IsLeap
+    DeltaDates
+    Functions
+    FromGregorian
+    ToGregorian
+    GregorianDayofWeek
+    FromShire
+    ToShire
+    ShireDayofWeek
+    
+    SecsTo24
+    SecsTo12
+    SecsTo10
+    SecsFrom24
+    SecsFrom12
+    SecsFrom10
+    
+    IsLeap
+    DeltaDates
+/******************************************************************************/
+/*******************************   end   **************************************/
+/******************************************************************************/
+sub time2zulu { }
+This subroutine converts a zone julian date:time to zulu given original date:time and time zone
+Algorithm:
+	add time to original
+	if time > 86400 then subtract 86400 from time and increment date
+	if time < 0000 then add 2400 to time and decrement date
+	if day > year's end then date=1 and increment year
+	if day < 1 then day=1 and decrement year
+	
+sub zulu2time { }
+This subroutine converts a zulu date:time to zone given zulu date:time and time zone
+Algorithm:
+	subtract time from zulu
+	if time > 2400 then subtract 2400 from time and increment date
+	if time < 0000 then add 2400 to time and decrement date
+	if day > year's end then date=1 and increment year
+	if day < 1 then day=1 and decrement year
+
+sub Gregorian2Julian { }
+This subroutine converts a Gregorian date to a Julian date
+Algorithm:
+	Determine if leap year and use appropriate month set
+	determine integer month
+	return day = day of month plus sum of previous months
+
+sub Julian2Gregorian { }
+This subroutine converts a Julian date to a Gregorian date
+Algorithm:
+	Determine if leap year and use appropriate month set
+	While day !inMonth increment month
+	Return Gregorian Date
+
+sub Shire2Julian { }
+This subroutine converts a Shire date to a Julian date
+Algorithm:
+	If special day then set value and return day
+	Determine if leap year and use appropriate year set
+	determine integer month
+	return day = day of month plus sum of previous months
+
+sub Julian2Shire { }
+This subroutine converts a Julian date to a Shire date
+Algorithm:
+	Determine if leap year and use appropriate year set
+	If special day then return Shire date by table
+	While day !inMonth increment Month
+	return Shire date
+
+sub ShireDayofWeek { }
+This subroutine returns the number of the day of week 0:7 given a Shire date
+Algorithm:
+
+sub GregorianDayofWeek { }
+This subroutine returns the number of the day of week 1:7 given a Gregorian Date
+Algorithm:
+
+sub isLeap { }
+This returns True if LeapYear otherwise False
+Algorithm:
+	if year mod 4  0 then return False
+	if year mod 4 = 0 and year mod 400 = 0 return True
+	if year mod 4 = 0 and year mod 100  0 return True else False
+
+sub time2secs { }
+This subroutine converts 24 hour time to seconds from midnight
+Algorithm:
+
+sub secs2time ( )
+This subroutine converts seconds from midnight to 24 hour time
+Algorithm:
+	ss.sss = secs mod 60
+	hour = trunc(secs - ss.sss)/3600
+	minutes = ((secs - ss.sss) - (hour*3600))/60
+
+sub 12convert24
+This sub converts a 24 hour time to 12 hour time
+Algorithm:
+	if hh < 13 return time + 'a.m.'
+		else hh -= 12 and return time + 'p.m.'
+
+sub 24convert12
+This sub converts a 12 hour time to 24 hour time
+Algorithm:
+	if 'a.m.' return time else hh += 12 and return time
+
+sub deltaDates
+This subroutine determines the delta time between two dates
+Algorithm
+	Determine the greater date
+	subtract from the greater date the lesser date
+		subtract seconds and make necessary day corrections
+		subtract days and make any necessarey year corrections
+		subtract years
+	return delta time
+
+sub dateDelta
+This subroutine computes the new date given the original date and delta time
+Algorithm
+	add delta time to date making corrections as necessary
+	return new date
+
+/******************************************************************************/
+/* Etyme.h                                                                  */
+/* -------------------------------------------------------------------------- */
+/* Version 0.0  00/2000 eab                                                   */
+/* -------------------------------------------------------------------------- */
+/* Purpose                                                                    */
+/* -------------------------------------------------------------------------- */
+/* Platform: all                                                              */
+/* -------------------------------------------------------------------------- */
+/* History:                                                                   */
+/* -------------------------------------------------------------------------- */
+/******************************************************************************/
+
+/******************************************************************************/
+/********************              #includes               ********************/
+/******************************************************************************/
+
+
+@interface
+
+/******************************************************************************/
+/********************     member declarations              ********************/
+/******************************************************************************/
+{
+struct edaet {        /* Internal Earth Date and Time GMT*/
+    float   seconds;    /* seconds from midnight  0->86399 */
+    short   days;    /* days in year 1->365 or 366      */
+    int     year;    /* year  (Gregorian based)         */
+} edaet;
+
+struct etyme {        /* standard 24 hour Earth Clock    */
+	float    seconds;    /* 0-59 seconds in current minute  */
+	short    minutes;    /* 0-59 minutes in current hour    */
+	short    hour;    /* 0-23 hour in current day        */
+} etyme;
+
+struct atyme {        /* angular Earth Clock    */
+	float    arc_seconds;    /* 0-59 seconds in current minute  */
+	short    arc_minutes;    /* 0-59 minutes in current hour    */
+	short    degrees; /* 0-359 degree in current day     */
+} atyme;
+
+struct gdates {                /* Gregorian Date - std 24hr clock */
+	 struct  etyme     tyme;   /* time of day - 24 hour clock */
+    short   day;              /* day in month     1-31           */
+    int     month;            /* month in year    1-12           */
+    int     year;             /* year             +-nnnnn  CE    */
+    float   zone;             /* local time zone  -12 -> + 12    */
+    int     diwk;    /* day in week      1-7            */
+} gdates;
+
+struct gdatea {       /* Gregorian Date - angular 24hr clock */
+	 struct  atyme     tyme;   /* time of day - angular clock */
+    short   day;     /* day in month     1-31               */
+    int     month;   /* month in year    1-12               */
+    int     year;    /* year            +-nnnnn CE          */
+    int     diwk;    /* day in week     1-7                 */
+} gdatea;
+
+struct hdates {       /* Hobbit Date - std 24hr clock */
+	 struct  etyme     tyme;   /* time of day - 24 hour clock */
+    short   day;     /* day in month     1-30           */
+    int     month;   /* month in year    0-12           */
+    int     year;    /* year             +-nnnnn  CE    */
+    float   zone;    /* local time zone  -12 -> + 12    */
+    int     diwk;    /* day in week      0-7            */
+} hdates;
+
+struct hdatea {       /* Hobbit Date - angular 24hr clock    */
+	 struct  atyme     tyme;   /* time of day - angular clock */
+    short   day;     /* day in month     1-30               */
+    int     month;   /* month in year    0-12               */
+    int     year;    /* year            +-nnnnn CE          */
+    int     diwk;    /* day in week      0-7                */
+} hdatea;
+
+
+
+
+
+
+}
+Calendar Program
+
+This program has a number of different functions
+    1) Convert between any two calendar systems that I know
+    2) Display a calendar period (month, week, day) of a desired system
+    3) Appointments
+    4) Compute delta date/time
+
+
+
+Calendar systems
+    Julian
+    Gregorian
+    Shire
+    'Scientific'-a
+    Mars
+    Chinese-learn and code
+
+Structures
+    jdate - secs from midnight
+            day from year start
+            year
+            time zone delta hour from Zulu
+
+
+
+    
+
+/* ===== * ===== * ===== * ===== ****** ===== * ===== * ===== * ===== * ===== */
+/* Calendar systems                                                           */
+**********************************************************************************    
+Internal date:time format is Julian GMT -  year:day:sssss.sss
+time zones internal sssss
+/* */
+sub time2zulu { }
+/* This subroutine converts a zone julian date:time to zulu given original date:time and time zone
+Algorithm:
+	add time to original
+	if time > 86400 then subtract 86400 from time and increment date
+	if time < 0000 then add 2400 to time and decrement date
+	if day > year's end then date=1 and increment year
+	if day < 1 then day=1 and decrement year
+/* */	
+sub zulu2time { }
+This subroutine converts a zulu date:time to zone given zulu date:time and time zone
+Algorithm:
+	subtract time from zulu
+	if time > 2400 then subtract 2400 from time and increment date
+	if time < 0000 then add 2400 to time and decrement date
+	if day > year's end then date=1 and increment year
+	if day < 1 then day=1 and decrement year
+/* */
+int Gregorian2Julian();
+/* This subroutine converts a Gregorian date to a Julian date                */
+Algorithm:
+	Determine if leap year and use appropriate month set
+	determine integer month
+	return day = day of month plus sum of previous months
+
+sub Julian2Gregorian { }
+This subroutine converts a Julian date to a Gregorian date
+Algorithm:
+	Determine if leap year and use appropriate month set
+	While day !inMonth increment month
+	Return Gregorian Date
+/* */
+sub Shire2Julian { }
+This subroutine converts a Shire date to a Julian date
+Algorithm:
+	If special day then set value and return day
+	Determine if leap year and use appropriate year set
+	determine integer month
+	return day = day of month plus sum of previous months
+/* */
+sub Julian2Shire { }
+This subroutine converts a Julian date to a Shire date
+Algorithm:
+	Determine if leap year and use appropriate year set
+	If special day then return Shire date by table
+	While day !inMonth increment Month
+	return Shire date
+/* */
+sub ShireDayofWeek { }
+This subroutine returns the number of the day of week 0:7 given a Shire date
+Algorithm:
+/* */
+sub GregorianDayofWeek { }
+This subroutine returns the number of the day of week 1:7 given a Gregorian Date
+Algorithm:
+/* */
+sub isLeap { }
+This returns True if LeapYear otherwise False
+Algorithm:
+	if year mod 4  0 then return False
+	if year mod 4 = 0 and year mod 400 = 0 return True
+	if year mod 4 = 0 and year mod 100  0 return True else False
+/* */
+sub time2secs { }
+This subroutine converts 24 hour time to seconds from midnight
+Algorithm:
+/* */
+sub secs2time ( )
+This subroutine converts seconds from midnight to 24 hour time
+Algorithm:
+	ss.sss = secs mod 60
+	hour = trunc(secs - ss.sss)/3600
+	minutes = ((secs - ss.sss) - (hour*3600))/60
+/* */
+sub 12convert24
+This sub converts a 24 hour time to 12 hour time
+Algorithm:
+	if hh < 13 return time + 'a.m.'
+		else hh -= 12 and return time + 'p.m.'
+/* */
+sub 24convert12
+This sub converts a 12 hour time to 24 hour time
+Algorithm:
+	if 'a.m.' return time else hh += 12 and return time
+/* */
+sub deltaDates
+This subroutine determines the delta time between two dates
+Algorithm
+	Determine the greater date
+	subtract from the greater date the lesser date
+		subtract seconds and make necessary day corrections
+		subtract days and make any necessarey year corrections
+		subtract years
+	return delta time
+
+sub dateDelta
+This subroutine computes the new date given the original date and delta time
+Algorithm
+	add delta time to date making corrections as necessary
+	return new date
+Calendar - c
+
+
+/* */
+int Gregorian_2_Julian(int month, int day, int year)
+
+/* */
+date Julian_2_Gregorian(int day, int year)
+
+
+struct date
+	int month
+	int day
+	int year
+end struct
+
+date Julian_2_Hobbit(int day, int year)
+int Hobbit_2_Julian(int month, int day, int year)
+
+int day_of_week_Gregorian(date)
+int day_of_week_Hobbit(date)
+int day_of_week_Julian(date)
+
+Appointment_by_day()
+Appointment_by_date()
+
+Display_week
+Display_day
+
+Boolean isaLeapYear(int year)
+
+*/
+# calendar routines in C
+
+
+
+
+    edate   itime,etime;
+    
+
+int time2zulu (edate itime, edate ftime&);
+.........1.........2.........3.........4.........5.........6.........7.........8
+/* -------------------------------------------------------------------------- */
+/* Convert a time from a local time zone to Greenwich Mean Time (Zulu)        */
+/* v1.0 eab 12/2000                                                           */
+/* Algorithm:                                                                 */
+/*     First set the max number of days in the year by using isleap           */
+/*     Now add the seconds for time zone correction to current seconds        */
+/*     Now we do a series of checks to see if we changed to a different day   */
+/*          If so we update the day and seconds, then see if that changes the */
+/*          year and if so update the day and year accordingly                */
+/* -------------------------------------------------------------------------- */
+
+int zulu2time (edate itime, float newzone, edate ftime&);
+/* -------------------------------------------------------------------------- */
+/* Convert a Zulu time to anothor local time zone                             */
+/* v1.0 eab 12/2000                                                           */
+/* Algorithm:                                                                 */
+/*     First set the max number of days in the year by using isleap           */
+/*     Now subtract the seconds for time zone correction to current seconds   */
+/*     Now we do a series of checks to see if we changed to a different day   */
+/*          If so we update the day and seconds, then see if that changes the */
+/*          year and if so update the day and year accordingly                */
+/* -------------------------------------------------------------------------- */
+
+int Gregorian2Julian (gdate itime, edate ftime&);
+/* -------------------------------------------------------------------------- */
+/* Convert a Gregorian date to a Julian date                                  */
+/* v1.0 eab 12/2000                                                           */
+/* Algorithm:                                                                 */
+/*      First determine if the year is a leap year and set days/month array   */
+/*                                                                            */
+
+gdate Julian2Gregprium (edate itime)
+{
+}
+
+edate Shire2Julian (sdate itime)
+{
+}
+
+sdate Julian2Shire (edate itime)
+{
+}
+
+string ShireDayofWeek()
+string GregorianDayofWeek()
+
+Boolean isleap(int year);
+/* -------------------------------------------------------------------------- */
+/* The algorithm used here is simplistic, refinement will be done later       */
+/* Algorith:                                                                  */
+/*      First return False for all years not divisible by 4                   */
+/*            All years left are now evenly divisible by 4 so maybe leap year */
+/*      Second return True for all years not divisible by 100                 */
+/*            left is just the century years                                  */
+/*      Return true if divisible by 400 otherwise return false                */
+/* -------------------------------------------------------------------------- */
+
+float secs2time()
+float time2secs()
+nn 12convert24
+nn 24convert12
+nn deltaDates(edate itime, edate ftyme)
+Functions
+    FromGregorian
+    ToGregorian
+    GregorianDayofWeek
+    FromShire
+    ToShire
+    ShireDayofWeek
+    
+    SecsTo24
+    SecsTo12
+    SecsTo10
+    SecsFrom24
+    SecsFrom12
+    SecsFrom10
+    
+    IsLeap
+    DeltaDates
+    Functions
+    FromGregorian
+    ToGregorian
+    GregorianDayofWeek
+    FromShire
+    ToShire
+    ShireDayofWeek
+    
+    SecsTo24
+    SecsTo12
+    SecsTo10
+    SecsFrom24
+    SecsFrom12
+    SecsFrom10
+    
+    IsLeap
+    DeltaDates
+/******************************************************************************/
+/*******************************   end   **************************************/
+/******************************************************************************/
+A program for time and calendars
+
+Time:
+	24hour clock standard
+	24hour world clock - AngularTime
+
+	
+Time:
+	Internal time is seconds from midnight at GMT (0-86,400) 
+	Functions:
+		Internal to standard 24 hour clock GMT (0-24,0-60,0-60)
+			secsrm = current seconds from midnight GMT
+			hours = trunc(secsrm/3600)
+			secrm = secsrm - (hours * 3600)
+			minutes = trunc(secsrm/60)
+			seconds = secsrm - (minutes * 60)
+		GMT to local time
+			Hours = Hours + TimeZone  (+12 to -12)
+			if hours > 24 then day++ && hours=hours-24
+			if hours < 00 then day-- && hours=hours+24
+		Internal to world clock (0-360,0-60,0-60)
+			secsrm = current seconds from midnight GMT
+			degrees = trunc(secsrm/240)
+			secrm = secsrm - (degrees * 240)
+			minutes = trunc(secsrm/60)
+			seconds = secsrm - (minutes * 60)
+			
+
+Calendars
+	Internal date is days from start of Gregorian year GMT
+	Functions:
+	
+
+/* ********** ********** ********** ********** ********** ********** */
+/* Convert etyme to seconds                                          */
+int etime2seconds(etyme itime, float secs)
+{
+	int errNum = 0;
+	secs = itime.seconds + (60 * itime.minutes) + (3600 * itime.hours);
+	return(errNum)
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+/* Seconds in day to 24 hour Earth time GMT                          */
+int seconds2etime(float seconds, etyme theTime)
+{
+	int errNum = 0;
+	
+	if (seconds < 0) return(-1);    // negative time in date
+	if (seconds >= 86400) return (1);  // more seconds than allowed in Earth day
+	
+	theTime.hour = (int)(seconds / 3600);
+	seconds -= (theTime.hours * 3600);
+	theTime.minutes = (int)(seconds / 60);
+	theTime.seconds = seconds - (theTime.minutes * 60);
+	return(errNum);
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+/* Convert angular time to seconds                                   */
+int atime2seconds(atyme itime, float seconds)
+{
+	int errNum = 0;
+
+	seconds = (itime.degrees * 240) + (itime.arc_minutes * 4) + (itime.arc_seconds / 15.0));
+	return(errNum)
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+/* Convert seconds to angular time                                   */
+int seconds2atime(float seconds, atyme theTime)
+{
+	int	errNum = 0;
+
+	if (seconds < 0) return(-1);    // negative time in date
+	if (seconds >= 86400) return (1);  // more seconds than allowed in Earth day
+	
+	theTime.degrees = (int)(seconds / 360);
+	seconds -= (theTime.degrees * 360);
+	theTime.arc_minutes = (int)(seconds / 60);
+	theTime.arc_seconds = seconds - (theTime.arc_minutes * 60);
+	return(errNum);
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+/* Convert a standard 24 hour Earth local time to zulu time          */
+int local2zulu (etyme itime, float timeZone etyme ftime&)
+{
+	int errNum = 0;
+	
+	ftime.hour = itime + timeZone;
+	return (errNum)
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+/* Convert a standard 24 hour Earth zulu time to local time          */
+int zulu2local (etyme itime, float timeZone etyme ftime&)
+{
+	int errNum = 0;
+	
+	ftime.hour = itime - timeZone;
+	return (errNum);
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+/* convert a zulu Earth time to a local Earth time zone */
+int local2zulu (edate itime, float newzone, edate ftime&)   
+{
+     edate    tyme;
+     int      maxdays;
+     int      errNum = 0;
+     float    secs_per_day=24.0*60.0*60.0;
+
+     isleap(itime.year) ? maxdays = 366 : maxdays = 365;
+     tyme.secs = itime.secs + (newzone * 3600)
+     if (tyme.secs > (secs_per_day - 1)
+       {
+          tyme.secs -= secs_per_day;
+          tyme.days += 1;
+       }
+     else
+     if (tyme.secs < 0)  /* before midnight */
+       {
+          tyme.secs += secs_per_day;
+          tyme.days -= 1;
+       }
+     if (tyme.days > maxdays)   /* next year */
+       {
+          tyme.days -= maxdays;
+          tyme.year += 1;
+       }
+     else
+     if ( tyme.days < 1 )   /* last year */
+       {
+          tyme.days += maxdays;
+          tyme.year -= 1;
+       }
+     tyme.zone = 0;
+     ftime = tyme;
+     return (errNum);
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+/* convert a zulu Earth time to a local Earth time zone */
+int zulu2local (edate itime, float newzone, edate ftime&)   
+{
+     edate    tyme;
+     int      maxdays;
+     int      errNum =0;
+     float    secs_per_day=24.0*60.0*60.0;
+
+     isleap(itime.year) ? maxdays = 366 : maxdays = 365;
+     tyme.secs = itime.secs - (newzone * 3600)
+     if (tyme.secs > (secs_per_day - 1)
+       {
+          tyme.secs -= secs_per_day;
+          tyme.days += 1;
+       }
+     else
+     if (tyme.secs < 0)  /* before midnight */
+       {
+          tyme.secs += secs_per_day;
+          tyme.days -= 1;
+       }
+     if (tyme.days > maxdays)   /* next year */
+       {
+          tyme.days -= maxdays;
+          tyme.year += 1;
+       }
+     else
+     if ( tyme.days < 1 )   /* last year */
+       {
+          tyme.days += maxdays;
+          tyme.year -= 1;
+       }
+     tyme.zone = newzone;
+     ftyme = tyme;
+     return (errNum);
+}
+
+//* ********** ********** ********** ********** ********** ********** */
+/* Convert a Gregorian Calendar date and time to internal date&time  */
+int gregorian2internal(gdates itime, edaet ftime)
+{
+	int	errNum = 0;
+	int maxdays;
+	struct etyme theTime;
+	
+	isleap(itime.year) ? maxdays = 366 : maxdays = 365;
+	if (itime.zone != 0)
+	{
+		errNum = local2zulu(itime.etyme, itime.zone, theTyme);
+		if (theTyme.hour > 23) 
+		{
+			itime.day += 1;
+			theTyme.hour -= 24;
+		}
+		if (theTyme.hour < 0 )
+		{
+			itime.day -= 1;
+			theTyme.hour += 24;
+		}
+	}
+	errNum = etime2seconds(theTyme, ftime.seconds);
+	ftime.year = itime.year;
+	switch (itime.month)
+	{
+		case  1: // January - 31
+				ftime.days = itime.day;
+				if (itime.day == 0 )
+				{
+					isleap((itime.year - 1)) ? ftime.days = 366 : ftime.days = 365;
+					ftime.year -= 1;
+				}
+				break;
+		case  2: // February - 28 ? 29
+				ftime.days = itime.day + 31;
+				break;
+		case  3: // March - 31
+				isleap(itime.year) ? ftime.days = 59 + itime.day : ftime.days = 60 + itime.day;
+				break;
+		case  4: // April - 30
+				isleap(itime.year) ? ftime.days = 90 + itime.day : ftime.days = 91 + itime.day;
+				break;
+		case  5: // May - 31
+				isleap(itime.year) ? ftime.days = 120 + itime.day : ftime.days = 121 + itime.day;
+				break;
+		case  6: // June - 30
+				isleap(itime.year) ? ftime.days = 151 + itime.day : ftime.days = 152 + itime.day;
+				break;
+		case  7: // July - 31
+				isleap(itime.year) ? ftime.days = 181 + itime.day : ftime.days = 182 + itime.day;
+				break;
+		case  8: // August - 31
+				isleap(itime.year) ? ftime.days = 212 + itime.day : ftime.days = 213 + itime.day;
+				break;
+		case  9: // September - 30
+				isleap(itime.year) ? ftime.days = 243 + itime.day : ftime.days = 244 + itime.day;
+				break;
+		case 10: // October - 31
+				isleap(itime.year) ? ftime.days = 273 + itime.day : ftime.days = 274 + itime.day;
+				break;
+		case 11: // November - 30
+				isleap(itime.year) ? ftime.days = 304 + itime.day : ftime.days = 305 + itime.day;
+				break;
+		case 12: // December - 31
+				isleap(itime.year) ? ftime.days = 334 + itime.day : ftime.days = 335 + itime.day;
+				if (ftime.days > maxdays)
+				{
+					ftime.year += 1;
+					ftime.days = 1;
+				}
+				break;
+	}
+	return (errNum);
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+/* Convert an internal date and time to Gregorian date and time      */
+/* Note that if year == 1582 10/5==10/15
+{
+}
+
+/* ********** ********** ********** ********** ********** ********** */
+int angular2zulu (edate itime, edate ftime)
+/* ********** ********** ********** ********** ********** ********** */
+int zulu2angular (edate itime, edate ftime)
+/* ********** ********** ********** ********** ********** ********** */
+i/* ********** ********** ********** ********** ********** ********** */
+int internal2Shire()
+/* ********** ********** ********** ********** ********** ********** */
+int dectime2internal
+/* ********** ********** ********** ********** ********** ********** */
+int Fixed2internal
+/* ********** ********** ********** ********** ********** ********** */
+int world2internal
+/* ********** ********** ********** ********** ********** ********** */
+
+int Gregorian2Julian (gdate itime, edate tyme&)
+/* -------------------------------------------------------------------------- */
+/* Convert a Gregorian date to a Julian date                                  */
+/* v1.0 eab 12/2000                                                           */
+/* Algorithm:                                                                 */
+/*      First determine if the year is a leap year and set days/month array   */
+/*                                                                            */
+{
+	 int   errNum = 0;
+     short maxdays;
+
+     short leapdays [31,29,31,30,31,30,31,31,30,30,30,31];
+     short regdays  [31,29,31,30,31,30,31,31,30,30,30,31];
+
+     isleap(itime.year) ? dayinmonth = leapdays : regdays ;
+     tyme.secs = itime.secs + (60.0 * itime.hours);
+     tyme.year = itime.year;
+     tyme.zone = itime.zone;
+     if ( itime.month == 0 )
+       {
+          tyme.days = itime.day
+       }
+     else
+       {
+          tyme.days = 0;
+          for (i=1 : i < (itime.month-1) : i++)
+             {
+               tyme.days += dayinmonth[i-1];
+             }
+          tyme.days += itime.day;
+     return(errNum);
+}
+
+int Julian2Gregoriam (edate itime, gdate ftyme&)
+{
+}
+
+edate Shire2Julian (sdate itime)
+{
+}
+
+sdate Julian2Shire (edate itime)
+{
+}
+
+string ShireDayofWeek()
+{
+}
+
+string GregorianDayofWeek()
+{
+}
+
+float secs2time()
+float time2secs()
+nn 12convert24
+nn 24convert12
+nn deltaDates(edate itime, edate ftyme)
