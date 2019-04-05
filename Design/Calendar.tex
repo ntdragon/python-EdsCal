@@ -106,39 +106,39 @@ written bits and pieces in various computing languages over the decades and have
 linux platform.  Another hope is to do it well enough in python to make it portable to other platforms.  Porting to other operating systems is low priority for me but may be
 done as an exercise.
 
-Different calendars desired
+Different calendars desired: \vspace{-.2in}
      \bi
-     \item Gregorian
-     \item Julian
-     \item Shire
-     \item oriental
-     \item Jewish
-     \item Scientific
-     \item perpetual
-     \item Mars 
-     \item lunar
+     \item Gregorian \vspace{-.1in}
+     \item Julian \vspace{-.1in}
+     \item Shire \vspace{-.1in}
+     \item Oriental \vspace{-.1in}
+     \item Jewish \vspace{-.1in}
+     \item Scientific \vspace{-.1in}
+     \item perpetual \vspace{-.1in}
+     \item Mars  \vspace{-.1in}
+     \item lunar \vspace{-.1in}
      \item Various other proposed calendar ideas
      \ei
      
 User Interfaces for the program set; Graphical, Web Browser and Command Line.  Depending on the user interface not all features may be available.  Below is a listing of various
-program features and subfeatures;
+program features and subfeatures; \vspace{-.25in}
 
 \bi     
-\item printout a calendar
+\item printout a calendar \vspace{-.1in}
      \bi
-     \item Day's events
-     \item by week
-     \item by month
-     \item by year
-     \item blank calendar (month, year)
-     \item for calendars week long or greater give an option as to which is the starting day of the week
+     \item Day's events \vspace{-.1in}
+     \item by week \vspace{-.1in}
+     \item by month \vspace{-.1in}
+     \item by year \vspace{-.1in}
+     \item blank calendar (month, year) \vspace{-.1in}
+     \item for calendars week long or greater give an option as to which is the starting day of the week \vspace{-.1in}
      \ei
-\item convert between calendars
-\item account for time zones based on location
-\item schedule an event
-\item be able to invite other people by e-mail-ics-gcal
-\item be able to import events from iCal and other calendars
-\item printout or email day's events to user using preferred calendar structure or random calendar
+\item convert between calendars \vspace{-.1in}
+\item account for time zones based on location \vspace{-.1in}
+\item schedule an event \vspace{-.1in}
+\item be able to invite other people by e-mail-ics-gcal \vspace{-.1in}
+\item be able to import events from iCal and other calendars \vspace{-.1in}
+\item printout or email day's events to user using preferred calendar structure or random calendar \vspace{-.1in}
 \item support multiple calendars for each user
 \ei
 
@@ -170,14 +170,14 @@ Chinese Zodiac animals - monkey, rooster, dog, pig, rat, ox, tiger, rabbit, drag
 \subsection{Jewish}
 
 \bi
-	\item A month is calculated as 29 days, 12 hours, and 793 "parts"
-	\item Leap years occur in years 3, 6, 8, 11, 14, 17 and 19 of a 19-year cycle
-	\item Adjustments (dechiyot) prevent round off the date calculated
-	\item Dechiyot prevent oddities in the length of the year
-	\item  Dechiyot prevent holidays from falling on the wrong day of the week
-	\item  Some months have variable lengths
-	\item There are 14 possible formats of year, identified by codes
-	\item  The calendar is not perfect, but it is very accurate
+	\item A month is calculated as 29 days, 12 hours, and 793 "parts"  \vspace{-.15in}
+	\item Leap years occur in years 3, 6, 8, 11, 14, 17 and 19 of a 19-year cycle \vspace{-.15in}
+	\item Adjustments (dechiyot) prevent round off the date calculated \vspace{-.15in}
+	\item Dechiyot prevent oddities in the length of the year  \vspace{-.15in}
+	\item  Dechiyot prevent holidays from falling on the wrong day of the week  \vspace{-.15in}
+	\item  Some months have variable lengths \vspace{-.15in}
+	\item There are 14 possible formats of year, identified by codes \vspace{-.15in}
+	\item  The calendar is not perfect, but it is very accurate  \vspace{-.15in}
 \ei
 \subsection{Scientific / International fixed}
 13 months of 28 days which starts on Sunday, \\
@@ -198,15 +198,15 @@ Time - Zulu time zone (Greenwich Mean time) - Seconds from midnight
 
 Calendar Event Structure
 \bi
- 	\item date and time start
-	\item date and time end
-	\item duration
-	\item location - ?URL to location map
-	\item originator
-	\item invitees
-	\item invitees status
-	\item description/agenda
-	\item date and time created
+ 	\item date and time start \vspace{-.15in}
+	\item date and time end \vspace{-.15in}
+	\item duration \vspace{-.15in}
+	\item location - ?URL to location map \vspace{-.15in}
+	\item originator \vspace{-.15in}
+	\item invitees \vspace{-.15in}
+	\item invitees status \vspace{-.15in}
+	\item description/agenda \vspace{-.15in}
+	\item date and time created \vspace{-.15in}
 	\item frequency - interval and end criteria??
 \ei
 \section{Calendar Routines/functions/...}
@@ -293,7 +293,8 @@ Year =>2Yule, Afteryule, Solmath, Rethe, Astron, Thrimidge, Forelithe, 1Lithe,
               Midyear's Day, (OverLithe), - these two are not part of the week   \\ 
             2Lithe, Afterlithe, Wedmath, Halimath, Winterfilth, Blotmath,      \\ 
               Foreyule, 1Yule                                                    \\ 
-nt Shire2internal(gdates itime, edaet ftime)int gregorian2internal(gdates itime, edaet ftime)
+\begin{verbatim}
+int Shire2internal(gdates itime, edaet ftime)int gregorian2internal(gdates itime, edaet ftime)
 {
 	int	errNum = 0;
 	int maxdays;
@@ -370,8 +371,9 @@ nt Shire2internal(gdates itime, edaet ftime)int gregorian2internal(gdates itime,
 	return (errNum);
 }
 
-
+\end{verbatim}
 \subsection{Oriental}
+\begin{verbatim}
 year = int(input("Enter a year: "))
 zodiacYear = year % 12 
 if zodiacYear == 0:
@@ -398,7 +400,7 @@ elif zodiacYear == 10:
     print("horse")
 else: 
     print("sheep")
-
+\end{verbatim}
 \subsection{ Jewish}
 \subsection{ Scientific/International Fixed}
    Scientific	/  International Fixed         \\ 
