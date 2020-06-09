@@ -1,5 +1,10 @@
 Calendar Notes
 
+Base Reference - January 1 1901 Gregorian was a Tuesday
+Jewish cal year 5758 begins on Gregorian Oct 2, 1997
+
+
+
 
 /* ===== * ===== * ===== * ===== ****** ===== * ===== * ===== * ===== * ===== */
 /* Calendar systems                                                           */
