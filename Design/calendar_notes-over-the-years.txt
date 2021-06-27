@@ -3,6 +3,12 @@ Calendar Notes
 Base Reference - January 1 1901 Gregorian was a Tuesday
 Jewish cal year 5758 begins on Gregorian Oct 2, 1997
 
+Mars day is 24hours 37 minutes Earth time and is called a sol.  There are 668.5991 sols per
+Mars year.  Invent caledar having 668 or 669(leap) sols per year.  Perhaps 8 day weeks so 83
+weeks 4 days per year.   depends if months to be equal length of week or a bit varied.
+perhaps quarter year is about 20 weeks with 3 weeks 4 days extra.  Quarter is 4 months of
+5 weeks with one month each quarter having 6 weeks for three quarters and one month in
+the fourth quarter haing 5 weeks 4 or 5 days. 
 
 
 
@@ -564,3 +570,5 @@ int Gregorian2Julian (gdate itime, edate tyme&)
      return(errNum);
 }
 
+ALso Mars days, Mars years (invent if not found a mars day clock and calendar year based 
+totally on Mars )  import only seconds as small unit of time
