@@ -1,13 +1,30 @@
+{# template footer
+     Function: prints the web page footer information.  The information in the footer is static and most is in
+          graphic files for security
+     --------------------------------------------------------------------------------------------------------------------------- 
+     Included in the body part of base.jhtml
+     includes graphics from ../gfx/ directory
+     CSS files are in ../css/
+     --------------------------------------------------------------------------------------------------------------------------- 
+#}
+
+
     <div id="footer">
+<input type="hidden" name="jinja2_template" value="footer.jhtml">
         {% block footer %}
-     <!-- <figure id="footer-left">
-          <img src="gfx/REACTOR.JPG" alt="research reactor" height="100" width=100">
-     </figure> -->
-     <div id="footer-center">
+      <div id="footer-left">
+       &copy; Copyright 2022 by <a href="https://www.ebirdsall.com/">EBirdsall</a>.
+     </div>
+
+      <figure id="footer-left">
+          <img src="../gfx/ed.jpg" alt="research reactor" height="100" width=100">
+     </figure> 
+     
+<div id="footer-center">
           <img src="../gfx/webfoot.jpg" alt="webmaster  @  birdsalle.com" height="100" width="300">
      </div>
-     <!-- <figure id="footer-right">
-          <img src="gfx/drum-clef.jpg" alt="drum clef" height="100" width="100">
-     </figure> -->
+      <figure id="footer-right">
+          <img src="../gfx/REACTOR.JPG" alt="research reactor" height="100" width="100">
+     </figure> 
         {% endblock footer %}
      </div>

@@ -8,7 +8,7 @@ pref = {  "startDay":1,  "startwk":5}
 days = ('Sunday Monday Tuesday Wednesday Thursday Friday Saturday Sunday'.split())
 colorsm = {"previousmonth": "fuschia", "thisbefore": "aqua",  "today": "yellow",  "thismonth": "white",  "nextmonth": "lime", "site":"red" }
 colorsc = { "neutral": "silver",  "calAclr": "green",  "calBclr": "blue",  "calCclr": "cyan",  "calDclr": "magenta",  "calEclr": "purple",  "calSclr": "red" }
-cal = {"month":"March", "year":"2019"}
+cal = {"month":"March", "year":"2019","numrows":"5"}
 
 bgtclr = [colorsm["thismonth"]]
 bgeclr = ["white"]

@@ -1,10 +1,25 @@
+{# template base
+     Function:   This is the base template which all the other web page temples extend
+   --------------------------------------------------------------------------------------------------------------------------- 
+     includes header.jhtml and footer.jhtml
+     base - hd.loc                      page location within website
+     header - hdr.name           who is accessing this page
+                      hdr.page            what page in the website
+                      hdr.today          today's date
+     footer - graphics currently set but should be variable?  don't really change over website
+     --------------------------------------------------------------------------------------------------------------------------- 
+     CSS files in ../css/
+     Graphics Files in ../gfx/
+      --------------------------------------------------------------------------------------------------------------------------- 
+#}
+
 <!DOCTYPE html>
 <html class="no-js" lang="en-US">
 <head>
      {% block head %}
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <meta name="author" content="Edward Birdsall"> 
+     <meta name="author" content="Edward Birdsall, Michael Birdsall"> 
      <link rel= "stylesheet" type = "text/css" href="../css/normalize.css" />
      <link rel= "stylesheet" type = "text/css" href="../css/main.css" />
     <link rel= "stylesheet" type = "text/css" href="../css/website.css" />
@@ -12,8 +27,9 @@
       {% endblock head %}
 </head>
 <body>
-     {% include "header.html" ignore missing %}
+<input type="hidden" name="jinja2_template" value="base.jhtml">
+     {% include "header.jhtml" ignore missing %}
     <div id="content">{% block content %}{% endblock content %}</div>
-    {% include 'footer.html' ignore missing %}
+    {% include 'footer.jhtml' ignore missing %}
 </body>
 </html>

@@ -21,5 +21,5 @@ create table event (
      fdate              date/time stop
      recurring     text,
      description    text,
-     location            text
+     location       text
 );
