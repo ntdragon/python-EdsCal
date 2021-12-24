@@ -2,15 +2,15 @@
 
 """
 try1 first attempts to write a calender ui
-using TCL/TK
+using TCL/TK to match what is on gift exchange initially
 
 Author: Edward Birdsall
 """
-
-from tkinter import Tk, W, E, BOTH
+from tkinter import *
+#from tkinter import Tk, W, E, BOTH
 from tkinter.ttk import Frame, Button, Entry, Style, Label
 
-class MCalendar4(Frame):
+class MGCalendar4(Frame):
 
      def __init__(self):
           super().__init__()
@@ -18,63 +18,135 @@ class MCalendar4(Frame):
           self.initUI()
 
      def initUI(self):
-          self.master.title("February 2yyy")
+          self.master.title("March 2019")
 
           Style().configure("TButton", padding=(0, 5, 0, 5), font='serif 10')
+          
+          days = ('Sunday Monday Tuesday Wednesday Thursday Friday Saturday Sunday'.split())
+          colorsm = {"priormonth": "Orchid", "thisbefore": "Aqua",  "today": "Yellow",  "thismonth": "White",  "nextmonth": "Lime", "site":"Red" , "neutral": "silver", "calSclr": "red" }
+          cal = {"month":"March", "year":"2019", "startwk":10,"calrows":5, "calAt":"Liturgical", "calBt":"US Holidays","calCt":"Birdsall Family", "calDt":"Kirkup Family", "calEt":""}
+          pref = {  "startDay":1,  "calAclr": "yellowgreen",  "calBclr": "lightsteelblue",  "calCclr": "cyan",  "calDclr": "magenta",  "calEclr": "purple"}
+          dts = [25, 26, 27, 28, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2, 3, 4, 5, 6, 7  ]
+          tdy = []
+          for i in range(0, 42,1):
+               tdy.append({"bgtclr":"white","bgeclr":"white", "dnum":0, "devt":-1, "devt1t":"", "devt1c":"",  "devt2t":"", "devt2c":"",  "devt3t":"", "devt3c":"",  "devt4t":"", "devt4c":"", })
+
+          for i in range(0, 4):
+               tdy[i]["bgtclr"] = colorsm["priormonth"]
+               tdy[i]["bgeclr"] = colorsm["priormonth"]
+
+          for i in range(35, 42):
+               tdy[i]["bgtclr"] = colorsm["nextmonth"]
+               tdy[i]["bgeclr"] = colorsm["nextmonth"]
+
+          for i in range(0,42,1):
+               tdy[i]["dnum"] = dts[i]
+               
+          tdy[4]["bgtclr"] = colorsm["thisbefore"]
+          tdy[4]["beeclr"] = colorsm["thisbefore"]
+          tdy[5]["bgtclr"] = colorsm["today"]
+          tdy[5]["beeclr"] = colorsm["today"]
 
           for  c in range(8):
                self.columnconfigure(c, pad=3)
 
-          for r in range(25):
+          for r in range(38):
                self.rowconfigure(r, pad=3)
+          
+          tdy[4]["devt"] = 1
+          tdy[4]["dev1t"] =  "Bryan Kovas B'day"
+          tdy[4]["dev1c"] = pref["calCclr"]
+          tdy[6]["devt"] = 1
+          tdy[6]["dev1t"] =  "Helen Birdsall B'day"
+          tdy[6]["dev1c"] = pref["calCclr"]
+          tdy[6]["devt"] = 3
+          tdy[6]["dev1t"] =  "Greg Kovas B'day"
+          tdy[6]["dev1c"] = pref["calCclr"]
+          tdy[6]["dev2t"] =  "Brielle Balmer B'day"
+          tdy[6]["dev2c"] = pref["calCclr"]
+          tdy[6]["dev3t"] =  "Andrew Noyes B'day"
+          tdy[6]["dev3c"] = pref["calCclr"]
 
-          st1 = Style()
-          st1.configure('W1.TButton', background="limegreen", foreground='black')
-          st2 = Style()
-          st2.configure('W2.TButton', background="red", foreground='black')
-          st3 = Style()
-          st3.configure('W3.TButton', background="palegreen", foreground='black')
-          st4 = Style()
-          st4.configure('W4.TButton', background="violet", foreground='black')
-          st5 = Style()
-          st5.configure('W5.TButton', background="wheat", foreground='black')
+          tdy[9]["devt"] = 1
+          tdy[9]["dev1t"] =  "Ash Wednesday"
+          tdy[9]["dev1c"] = pref["calAclr"]
+          tdy[13]["devt"] = 1
+          tdy[13]["dev1t"] =  "DST begins"
+          tdy[13]["dev1c"] = pref["calBclr"]
+          tdy[21]["devt"] = 1
+
+
+          caldy0 = Style()
+          caldy0.configure('CD0.TButton', background="white", foreground='black')
+          caldy1 = Style()
+          caldy1.configure('CD1.TButton', background=colorsm.get("priormonth"), foreground='black')
+          caldy2 = Style()
+          caldy2.configure('CD2.TButton', background=colorsm.get("thisbefore"), foreground='black')
+          caldy3 = Style()
+          caldy3.configure('CD3.TButton', background=colorsm.get("today"), foreground='black')
+          caldy4 = Style()
+          caldy4.configure('CD4.TButton', background=colorsm.get("thismonth"), foreground='black')
+          caldy5 = Style()
+          caldy5.configure('CD5.TButton', background=colorsm.get("nextmonth"), foreground='black')
+          caldy6 = Style()
+          caldy6.configure('CD6.TButton', background=colorsm.get("site"), foreground='black')
+
+
+
+
+          cal1 = Style()
+          cal1.configure('C1.TButton', background=pref.get("calAclr"), foreground='black')
+          cal2 = Style()
+          cal2.configure('C2.TButton', background=pref.get("calBclr"), foreground='black')
+          cal3 = Style()
+          cal3.configure('C3.TButton', background=pref.get("calCclr"), foreground='black')
+          cal4 = Style()
+          cal4.configure('C4.TButton', background=pref.get("calDclr"), foreground='black')
+          cal5 = Style()
+          cal5.configure('C5.TButton', background=pref.get("calEclr"), foreground='black')
+          cal6 = Style()
+          cal6.configure('C6.TButton', background="red", foreground='black')
            
           
           ct = Label(self)
           ct.grid(row=0, columnspan=8, sticky=W+E)
-          wom = Label(self, text="Week of Year", style='W5.TButton')
+
+          #Header Display
+
+          wom = Label(self, text="Week")
           wom.grid(row=1, column=0)
-          dow1 = Label(self, text="Monday")
+          dow1 = Label(self, text=days[pref.get("startDay")])
           dow1.grid(row=1, column=1)
-          dow2 = Label(self, text="Tuesday")
+          dow2 = Label(self, text=days[pref.get("startDay")+1])
           dow2.grid(row=1, column=2)
-          dow3 = Label(self, text="Wednesday")
+          dow3 = Label(self, text=days[pref.get("startDay")+2])
           dow3.grid(row=1, column=3)
-          dow4 = Label(self, text="Thursday")
+          dow4 = Label(self, text=days[pref.get("startDay")+3])
           dow4.grid(row=1, column=4)
-          dow5 = Label(self, text="Friday")
+          dow5 = Label(self, text=days[pref.get("startDay")+4])
           dow5.grid(row=1, column=5)
-          dow6 = Label(self, text="Saturday")
+          dow6 = Label(self, text=days[pref.get("startDay")+5])
           dow6.grid(row=1, column=6)
-          dow7 = Label(self, text="Sunday")
+          dow7 = Label(self, text=days[pref.get("startDay")+6])
           dow7.grid(row=1, column=7)
 
+          #Week 1 Display
 
-          r1wom = Label(self, text="5")
+          r1wom = Label(self, text=cal.get("startwk"), style='CD0.TButton')
           r1wom.grid(row=2, column=0)
-          r1dow1 = Label(self, text="1")
+          r1dow1 = Label(self, text=tdy[0].get("dnum"),background=tdy[0].get("bgtclr"))
           r1dow1.grid(row=2, column=1)
-          r1dow2 = Label(self, text="2")
+          r1dow2 = Label(self, text=tdy[1].get("dnum"),background=tdy[1].get("bgtclr"))
           r1dow2.grid(row=2, column=2)
-          r1dow3 = Label(self, text="3")
+          r1dow3 = Label(self, text=tdy[2].get("dnum"),background=tdy[2].get("bgtclr"))
           r1dow3.grid(row=2, column=3)
-          r1dow4 = Label(self, text="4")
+          r1dow4 = Label(self, text=tdy[3].get("dnum"),background=tdy[3].get("bgtclr"))
           r1dow4.grid(row=2, column=4)
-          r1dow5 = Label(self, text="5")
+          r1dow5 = Label(self, text=tdy[4].get("dnum"),background=tdy[4].get("bgtclr"))
           r1dow5.grid(row=2, column=5)
-          r1dow6 = Label(self, text="6")
+          r1dow6 = Label(self, text=tdy[5].get("dnum"),background=tdy[5].get("bgtclr"))
           r1dow6.grid(row=2, column=6)
-          r1dow7 = Label(self, text="7")
+          r1dow7 = Label(self, text=tdy[6].get("dnum"),background=tdy[6].get("bgtclr"))
           r1dow7.grid(row=2, column=7)
 
           r2dow1 = Button(self, text=" ")
@@ -83,13 +155,13 @@ class MCalendar4(Frame):
           r2dow2.grid(row=3, column=2)
           r2dow3 = Button(self, text=" ")
           r2dow3.grid(row=3, column=3)
-          r2dow4 = Button(self, text="PCP at 1400", style='W1.TButton')
+          r2dow4 = Button(self, text=" ")
           r2dow4.grid(row=3, column=4)
-          r2dow5 = Button(self, text=" ")
+          r2dow5 = Button(self, text=tdy[4].get("dev1t")) #, bg='#567') #tdy[4].get("dev1c"))
           r2dow5.grid(row=3, column=5)
           r2dow6 = Button(self, text=" ")
           r2dow6.grid(row=3, column=6)
-          r2dow7 = Button(self, text="Mass at 1100", style='W2.TButton')
+          r2dow7 = Button(self, text="Mass at 1100", style='C2.TButton')
           r2dow7.grid(row=3, column=7)
 
           r3dow1 = Button(self, text=" ")
@@ -137,28 +209,30 @@ class MCalendar4(Frame):
           r5dow7 = Button(self, text=" ")
           r5dow7.grid(row=6, column=7)
 
-          r6wom = Label(self, text="6")
+          #Week 2 Display
+
+          r6wom = Label(self, text=cal.get("startwk")+1, style='CD0.TButton')
           r6wom.grid(row=7, column=0)
-          r6dow1 = Label(self, text="8")
+          r6dow1 = Label(self, text=tdy[7].get("dnum"),background=tdy[7].get("bgtclr"))
           r6dow1.grid(row=7, column=1)
-          r6dow2 = Label(self, text="9")
+          r6dow2 = Label(self, text=tdy[8].get("dnum"),background=tdy[8].get("bgtclr"))
           r6dow2.grid(row=7, column=2)
-          r6dow3 = Label(self, text="10")
+          r6dow3 = Label(self, text=tdy[9].get("dnum"),background=tdy[9].get("bgtclr"))
           r6dow3.grid(row=7, column=3)
-          r6dow4 = Label(self, text="11")
+          r6dow4 = Label(self, text=tdy[10].get("dnum"),background=tdy[10].get("bgtclr"))
           r6dow4.grid(row=7, column=4)
-          r6dow5 = Label(self, text="12")
+          r6dow5 = Label(self, text=tdy[11].get("dnum"),background=tdy[11].get("bgtclr"))
           r6dow5.grid(row=7, column=5)
-          r6dow6 = Label(self, text="13")
+          r6dow6 = Label(self, text=tdy[12].get("dnum"),background=tdy[12].get("bgtclr"))
           r6dow6.grid(row=7, column=6)
-          r6dow7 = Label(self, text="14")
+          r6dow7 = Label(self, text=tdy[13].get("dnum"),background=tdy[13].get("bgtclr"))
           r6dow7.grid(row=7, column=7)
 
           r7dow1 = Button(self, text=" ")
           r7dow1.grid(row=8, column=1)
-          r7dow2 = Button(self, text="Dentist 1000")
+          r7dow2 = Button(self, text=" ")
           r7dow2.grid(row=8, column=2)
-          r7dow3 = Button(self, text=" ")
+          r7dow3 = Button(self, text=tdy[9].get("dev1t")) #,background=tdy[9].get("dev1c")))
           r7dow3.grid(row=8, column=3)
           r7dow4 = Button(self, text=" ")
           r7dow4.grid(row=8, column=4)
@@ -166,7 +240,7 @@ class MCalendar4(Frame):
           r7dow5.grid(row=8, column=5)
           r7dow6 = Button(self, text=" ")
           r7dow6.grid(row=8, column=6)
-          r7dow7 = Button(self, text="Mass at 1100", style='W2.TButton')
+          r7dow7 = Button(self, text=tdy[13].get("dev1t"), style='C2.TButton')
           r7dow7.grid(row=8, column=7)
 
           r8dow1 = Button(self, text=" ")
@@ -213,22 +287,24 @@ class MCalendar4(Frame):
           r10dow6.grid(row=11, column=6)
           r10dow7 = Button(self, text=" ")
           r10dow7.grid(row=11, column=7)
-          
-          r11wom = Label(self, text="7")
+
+          #Week 3 Display
+
+          r11wom = Label(self, text=cal.get("startwk")+2, style='CD0.TButton')
           r11wom.grid(row=12, column=0)
-          r11dow1 = Label(self, text="15")
+          r11dow1 = Label(self, text=tdy[14].get("dnum"),background=tdy[14].get("bgtclr"))
           r11dow1.grid(row=12, column=1)
-          r11dow2 = Label(self, text="16")
+          r11dow2 = Label(self, text=tdy[15].get("dnum"),background=tdy[15].get("bgtclr"))
           r11dow2.grid(row=12, column=2)
-          r11dow3 = Label(self, text="17")
+          r11dow3 = Label(self, text=tdy[16].get("dnum"),background=tdy[16].get("bgtclr"))
           r11dow3.grid(row=12, column=3)
-          r11dow4 = Label(self, text="18")
+          r11dow4 = Label(self, text=tdy[17].get("dnum"),background=tdy[17].get("bgtclr"))
           r11dow4.grid(row=12, column=4)
-          r11dow5 = Label(self, text="19")
+          r11dow5 = Label(self, text=tdy[18].get("dnum"),background=tdy[18].get("bgtclr"))
           r11dow5.grid(row=12, column=5)
-          r11dow6 = Label(self, text="20")
+          r11dow6 = Label(self, text=tdy[19].get("dnum"),background=tdy[19].get("bgtclr"))
           r11dow6.grid(row=12, column=6)
-          r11dow7 = Label(self, text="21")
+          r11dow7 = Label(self, text=tdy[20].get("dnum"),background=tdy[20].get("bgtclr"))
           r11dow7.grid(row=12, column=7)
 
           r12dow1 = Button(self, text=" ")
@@ -243,7 +319,7 @@ class MCalendar4(Frame):
           r12dow5.grid(row=13, column=5)
           r12dow6 = Button(self, text=" ")
           r12dow6.grid(row=13, column=6)
-          r12dow7 = Button(self, text="Mass at 1100", style='W2.TButton')
+          r12dow7 = Button(self, text="Mass at 1100", style='C1.TButton')
           r12dow7.grid(row=13, column=7)
 
           r13dow1 = Button(self, text=" ")
@@ -291,21 +367,23 @@ class MCalendar4(Frame):
           r15dow7 = Button(self, text=" ")
           r15dow7.grid(row=16, column=7)
 
-          r16wom = Label(self, text="8")
+          #Week 4 Display
+
+          r16wom = Label(self, text=cal.get("startwk")+3, style='CD0.TButton')
           r16wom.grid(row=17, column=0)
-          r16dow1 = Label(self, text="22")
+          r16dow1 = Label(self, text=tdy[21].get("dnum"),background=tdy[21].get("bgtclr"))
           r16dow1.grid(row=17, column=1)
-          r16dow2 = Label(self, text="23")
+          r16dow2 = Label(self, text=tdy[22].get("dnum"),background=tdy[22].get("bgtclr"))
           r16dow2.grid(row=17, column=2)
-          r16dow3 = Label(self, text="24")
+          r16dow3 = Label(self, text=tdy[23].get("dnum"),background=tdy[23].get("bgtclr"))
           r16dow3.grid(row=17, column=3)
-          r16dow4 = Label(self, text="25")
+          r16dow4 = Label(self, text=tdy[24].get("dnum"),background=tdy[24].get("bgtclr"))
           r16dow4.grid(row=17, column=4)
-          r16dow5 = Label(self, text="26")
+          r16dow5 = Label(self, text=tdy[25].get("dnum"),background=tdy[25].get("bgtclr"))
           r16dow5.grid(row=17, column=5)
-          r16dow6 = Label(self, text="27")
+          r16dow6 = Label(self, text=tdy[26].get("dnum"),background=tdy[26].get("bgtclr"))
           r16dow6.grid(row=17, column=6)
-          r16dow7 = Label(self, text="28")
+          r16dow7 = Label(self, text=tdy[27].get("dnum"),background=tdy[27].get("bgtclr"))
           r16dow7.grid(row=17, column=7)
 
           r17dow1 = Button(self, text=" ")
@@ -320,7 +398,7 @@ class MCalendar4(Frame):
           r17dow5.grid(row=18, column=5)
           r17dow6 = Button(self, text=" ")
           r17dow6.grid(row=18, column=6)
-          r17dow7 = Button(self, text="Mass at 1100", style='W2.TButton')
+          r17dow7 = Button(self, text="Mass at 1100", style='C1.TButton')
           r17dow7.grid(row=18, column=7)
 
           r18dow1 = Button(self, text=" ")
@@ -368,37 +446,223 @@ class MCalendar4(Frame):
           r20dow7 = Button(self, text=" ")
           r20dow7.grid(row=21, column=7)
 
-          cb = Label(self)
-          ct.grid(row=22, columnspan=8, sticky=W+E)
+          #Week 5 Display
 
-          cal1 = Label(self, text="Private", style='W1.TButton')
-          cal1.grid(row=23, column=1)
-          cal2 = Label(self, text="Public", style='W2.TButton')
-          cal2.grid(row=23, column=3)
-          cal3 = Label(self, text="Family", style='W3.TButton')
-          cal3.grid(row=23, column=5)
-          cal4 = Label(self, text="Holidays", style='W4.TButton')
-          cal4.grid(row=23, column=7)
+          r21wom = Label(self, text=cal.get("startwk")+3, style='CD0.TButton')
+          r21wom.grid(row=22, column=0)
+          r21dow1 = Label(self, text=tdy[28].get("dnum"),background=tdy[28].get("bgtclr"))
+          r21dow1.grid(row=22, column=1)
+          r21dow2 = Label(self, text=tdy[29].get("dnum"),background=tdy[29].get("bgtclr"))
+          r21dow2.grid(row=22, column=2)
+          r21dow3 = Label(self, text=tdy[30].get("dnum"),background=tdy[30].get("bgtclr"))
+          r21dow3.grid(row=22, column=3)
+          r21dow4 = Label(self, text=tdy[31].get("dnum"),background=tdy[31].get("bgtclr"))
+          r21dow4.grid(row=22, column=4)
+          r21dow5 = Label(self, text=tdy[32].get("dnum"),background=tdy[32].get("bgtclr"))
+          r21dow5.grid(row=22, column=5)
+          r21dow6 = Label(self, text=tdy[33].get("dnum"),background=tdy[33].get("bgtclr"))
+          r21dow6.grid(row=22, column=6)
+          r21dow7 = Label(self, text=tdy[34].get("dnum"),background=tdy[34].get("bgtclr"))
+          r21dow7.grid(row=22, column=7)
 
+          r22dow1 = Button(self, text=" ")
+          r22dow1.grid(row=23, column=1)
+          r22dow2 = Button(self, text=" ")
+          r22dow2.grid(row=23, column=2)
+          r22dow3 = Button(self, text=" ")
+          r22dow3.grid(row=23, column=3)
+          r22dow4 = Button(self, text=" ")
+          r22dow4.grid(row=23, column=4)
+          r22dow5 = Button(self, text=" ")
+          r22dow5.grid(row=23, column=5)
+          r22dow6 = Button(self, text=" ")
+          r22dow6.grid(row=23, column=6)
+          r22dow7 = Button(self, text="Mass at 1100", style='C1.TButton')
+          r22dow7.grid(row=23, column=7)
+
+          r23dow1 = Button(self, text=" ")
+          r23dow1.grid(row=24, column=1)
+          r23dow2 = Button(self, text=" ")
+          r23dow2.grid(row=24, column=2)
+          r23dow3 = Button(self, text=" ")
+          r23dow3.grid(row=24, column=3)
+          r23dow4 = Button(self, text=" ")
+          r23dow4.grid(row=24, column=4)
+          r23dow5 = Button(self, text=" ")
+          r23dow5.grid(row=24, column=5)
+          r23dow6 = Button(self, text=" ")
+          r23dow6.grid(row=24, column=6)
+          r23dow7 = Button(self, text=" ")
+          r23dow7.grid(row=24, column=7)
+
+          r24dow1 = Button(self, text=" ")
+          r24dow1.grid(row=25, column=1)
+          r24dow2 = Button(self, text=" ")
+          r24dow2.grid(row=25, column=2)
+          r24dow3 = Button(self, text=" ")
+          r24dow3.grid(row=25, column=3)
+          r24dow4 = Button(self, text=" ")
+          r24dow4.grid(row=25, column=4)
+          r24dow5 = Button(self, text=" ")
+          r24dow5.grid(row=25, column=5)
+          r24dow6 = Button(self, text=" ")
+          r24dow6.grid(row=25, column=6)
+          r24dow7 = Button(self, text=" ")
+          r24dow7.grid(row=25, column=7)
+
+          r25dow1 = Button(self, text=" ")
+          r25dow1.grid(row=26, column=1)
+          r25dow2 = Button(self, text=" ")
+          r25dow2.grid(row=26, column=2)
+          r25dow3 = Button(self, text=" ")
+          r25dow3.grid(row=26, column=3)
+          r25dow4 = Button(self, text=" ")
+          r25dow4.grid(row=26, column=4)
+          r25dow5 = Button(self, text=" ")
+          r25dow5.grid(row=26, column=5)
+          r25dow6 = Button(self, text=" ")
+          r25dow6.grid(row=26, column=6)
+          r25dow7 = Button(self, text=" ")
+          r25dow7.grid(row=26, column=7)
+
+          #Week 6 Display
+
+          r26wom = Label(self, text=cal.get("startwk")+3, style='CD0.TButton')
+          r26wom.grid(row=27, column=0)
+          r26dow1 = Label(self, text=tdy[35].get("dnum"),background=tdy[35].get("bgtclr"))
+          r26dow1.grid(row=27, column=1)
+          r26dow2 = Label(self, text=tdy[36].get("dnum"),background=tdy[36].get("bgtclr"))
+          r26dow2.grid(row=27, column=2)
+          r26dow3 = Label(self, text=tdy[37].get("dnum"),background=tdy[37].get("bgtclr"))
+          r26dow3.grid(row=27, column=3)
+          r26dow4 = Label(self, text=tdy[38].get("dnum"),background=tdy[38].get("bgtclr"))
+          r26dow4.grid(row=27, column=4)
+          r26dow5 = Label(self, text=tdy[39].get("dnum"),background=tdy[39].get("bgtclr"))
+          r26dow5.grid(row=27, column=5)
+          r26dow6 = Label(self, text=tdy[40].get("dnum"),background=tdy[40].get("bgtclr"))
+          r26dow6.grid(row=27, column=6)
+          r26dow7 = Label(self, text=tdy[41].get("dnum"),background=tdy[41].get("bgtclr"))
+          r26dow7.grid(row=27, column=7)
+
+          r27dow1 = Button(self, text=" ")
+          r27dow1.grid(row=28, column=1)
+          r27dow2 = Button(self, text=" ")
+          r27dow2.grid(row=28, column=2)
+          r27dow3 = Button(self, text=" ")
+          r27dow3.grid(row=28, column=3)
+          r27dow4 = Button(self, text=" ")
+          r27dow4.grid(row=28, column=4)
+          r27dow5 = Button(self, text=" ")
+          r27dow5.grid(row=28, column=5)
+          r27dow6 = Button(self, text=" ")
+          r27dow6.grid(row=28, column=6)
+          r27dow7 = Button(self, text="Mass at 1100", style='C1.TButton')
+          r27dow7.grid(row=28, column=7)
+
+          r28dow1 = Button(self, text=" ")
+          r28dow1.grid(row=29, column=1)
+          r28dow2 = Button(self, text=" ")
+          r28dow2.grid(row=29, column=2)
+          r28dow3 = Button(self, text=" ")
+          r28dow3.grid(row=29, column=3)
+          r28dow4 = Button(self, text=" ")
+          r28dow4.grid(row=29, column=4)
+          r28dow5 = Button(self, text=" ")
+          r28dow5.grid(row=29, column=5)
+          r28dow6 = Button(self, text=" ")
+          r28dow6.grid(row=29, column=6)
+          r28dow7 = Button(self, text=" ")
+          r28dow7.grid(row=29, column=7)
+
+          r29dow1 = Button(self, text=" ")
+          r29dow1.grid(row=30, column=1)
+          r29dow2 = Button(self, text=" ")
+          r29dow2.grid(row=30, column=2)
+          r29dow3 = Button(self, text=" ")
+          r29dow3.grid(row=30, column=3)
+          r29dow4 = Button(self, text=" ")
+          r29dow4.grid(row=30, column=4)
+          r29dow5 = Button(self, text=" ")
+          r29dow5.grid(row=30, column=5)
+          r29dow6 = Button(self, text=" ")
+          r29dow6.grid(row=30, column=6)
+          r29dow7 = Button(self, text=" ")
+          r29dow7.grid(row=30, column=7)
+
+          r30dow1 = Button(self, text=" ")
+          r30dow1.grid(row=31, column=1)
+          r30dow2 = Button(self, text=" ")
+          r30dow2.grid(row=31, column=2)
+          r30dow3 = Button(self, text=" ")
+          r30dow3.grid(row=31, column=3)
+          r30dow4 = Button(self, text=" ")
+          r30dow4.grid(row=31, column=4)
+          r30dow5 = Button(self, text=" ")
+          r30dow5.grid(row=31, column=5)
+          r30dow6 = Button(self, text=" ")
+          r30dow6.grid(row=31, column=6)
+          r30dow7 = Button(self, text=" ")
+          r30dow7.grid(row=31, column=7)
+
+          #Bottom of Page
+
+          cb = Label(self,text="Legend")
+          cb.grid(row=32, column=4)
+
+          day1 = Label(self, text="Prior Month", style='CD1.TButton')
+          day1.grid(row=33, column=0)
+          day2 = Label(self, text="This Month Prior to today", style='CD2.TButton')
+          day2.grid(row=33, column=1, columnspan=2)
+          day3 = Label(self, text="Today", style='CD3.TButton')
+          day3.grid(row=33, column=3)
+          day4 = Label(self, text="This Month after today", style='CD4.TButton')
+          day4.grid(row=33, column=4, columnspan=2)
+          day5 = Label(self, text="Next Month", style='CD5.TButton')
+          day5.grid(row=33, column=6)
+          day6 = Label(self, text="Site Down", style='CD6.TButton')
+          day6.grid(row=33, column=7)
+
+          ca = Label(self, text="Calendars in Use")
+          ca.grid(row=34, column=4)
+
+          cal1 = Label(self, text=cal.get("calAt"), style='C1.TButton')
+          cal1.grid(row=35, column=1)
+          cal2 = Label(self, text=cal.get("calBt"), style='C2.TButton')
+          cal2.grid(row=35, column=2)
+          cal3 = Label(self, text=cal.get("calCt"), style='C3.TButton')
+          cal3.grid(row=35, column=3)
+          cal4 = Label(self, text=cal.get("calDt"), style='C4.TButton')
+          cal4.grid(row=35, column=4)
+          cal5 = Label(self, text=cal.get("calEt"), style='C5.TButton')
+          cal5.grid(row=35, column=5)
+          cal6 = Label(self, text="Site", style='C6.TButton')
+          cal6.grid(row=35, column=6)
+
+
+          cc = Label(self)
+          cc.grid(row=36, columnspan=8,  sticky=W+E)
+
+          brt = Button(self,text="Return")
+          brt.grid(row=37, column=0)
           lbl1 = Label(self, text=" ")
-          lbl1.grid(row=24,column=0)
-          bbk = Button(self,text="Previous Month")
-          bbk.grid(row=24, column=1, columnspan=2)
-          lbl2 = Label(self, text=" ")
-          lbl2.grid(row=24,column=3)
-          bex = Button(self, text="Exit")
-          bex. grid(row=24, column=4)
-          lbl3 = Label(self, text=" ")
-          lbl3.grid(row=24,column=5)
+          lbl1.grid(row=37,column=1)
+          bbk = Button(self,text="Prior Month")
+          bbk.grid(row=37, column=3)
+          bpp = Button(self, text="Print Page")
+          bpp.grid(row=37, column=4)
           bnm = Button(self,text="Next Month")
-          bnm.grid(row=24, column=6, columnspan=2) 
+          bnm.grid(row=37, column=5) 
+          lbl2 = Label(self, text="")
+          lbl2.grid(row=37,column=6)
+          bnm = Button(self,text="Exit")
+          bnm.grid(row=37, column=7) 
           self.pack()
 
 
 def main():
 
     root = Tk()
-    app = MCalendar4()
+    app = MGCalendar4()
     root.mainloop()
 
 
