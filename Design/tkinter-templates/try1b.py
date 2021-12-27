@@ -163,6 +163,9 @@ class MGCalendar4(Frame):
           ct = Label(self,text=hdr.get("name")+"'s "+hdr.get("page"), justify=CENTER).grid(row=0, columnspan=8, sticky=W+E)
 
           #Header Display
+          
+          #dow = [] #List assignment index is out of range??
+          
           wom = Label(self, text="Week", font='serif, 10', bg="white", fg="black", height=1, width=6, borderwidth=3).grid(row=1, column=0)
           for x in range(7):
                dow = Label(self, text=days[pref.get("startDay")+x], font='serif, 10', bg="white", fg="black", height=1, width=17, borderwidth=3).grid(row=1, column=x+1)
