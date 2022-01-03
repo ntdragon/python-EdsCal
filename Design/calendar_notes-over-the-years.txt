@@ -572,3 +572,15 @@ int Gregorian2Julian (gdate itime, edate tyme&)
 
 ALso Mars days, Mars years (invent if not found a mars day clock and calendar year based 
 totally on Mars )  import only seconds as small unit of time
+
+
+calendar -w
+#include.calendar.__>
+mo/day<tab>description of day
+Thursday  every Thursday -4 +5 aliass last, first second
+/* */ comments
+nn  nn of every month
+<tab> at beginning of line uses last date
+* match every month
+* after date
+Easter is recognized  so can specify a date like Easter-46
