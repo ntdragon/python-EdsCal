@@ -1,0 +1,998 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0034)http://www.jewfaq.org/calendr2.htm -->
+<html dir="ltr" lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="Copyright" content="Unless otherwise stated on a page, the contents of this site, including but not limited to the text, graphics, sounds and scripts contained herein, were created by and are the sole property of Tracey R. Rich. The contents of this site may be reproduced for personal, educational or non-commercial use, but may NOT be reproduced on other websites.">
+<meta name="description" content="A closer look at the mathematics behind the Jewish Calendar, explaining how Hebrew dates are calculated.  Provides sample JavaScript code to show how the calculations work.">
+<meta name="keywords" content="jewish calendar hebrew calendar molad calculate calculation lunar month leap year Judaism 101 Judaic jewfaq Jewish Jew ">
+<title>Judaism 101: The Jewish Calendar: A Closer Look</title>
+<link rel="stylesheet" href="./Judaism 101_ The Jewish Calendar_ A Closer Look_files/jewfaq2012.css">
+<link rel="Previous" href="http://www.jewfaq.org/calendar.htm">
+<link rel="Next" href="http://www.jewfaq.org/shabbat.htm">
+<link rel="image_src" type="image/jpeg" href="http://www.jewfaq.org/graphics/md3.gif">
+</head>
+<body class="TimesSection">
+<table cellspacing="0" cellpadding="0" width="100%" class="banner sprite">
+<tbody><tr>
+<td align="left"><a href="http://www.jewfaq.org/index.shtml" class="logo sprite">Judaism 101</a></td>
+<td valign="middle" align="center" width="300"><form id="searchForm" action="http://www.jewfaq.org/search.shtml">
+<input type="text" name="Keywords" id="Keywd" size="25" class="SearchBox" onkeyup="showHint(event.keyCode)" autocomplete="off">
+<button type="submit"><span class="srch sprite">Search</span></button></form></td>
+<td align="right">
+<span class="navbar sprite">
+<a class="prev" href="http://www.jewfaq.org/calendar.htm">Back</a> | 
+<a class="toc" href="http://www.jewfaq.org/toc.htm">Site Map</a> | 
+<a class="next" href="http://www.jewfaq.org/shabbat.htm">Next</a>
+</span>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="5" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="nav bar" onmouseover="showMenu(0, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/index.htm" class="menulink">HOME</a></td>
+<td class="nav bar" onmouseover="showMenu(1, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/tocideas.htm" class="menulink">IDEAS</a></td>
+<td class="nav bar" onmouseover="showMenu(2, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/tocpeople.htm" class="menulink">PEOPLE</a></td>
+<td class="nav bar" onmouseover="showMenu(3, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/tocplaces.htm" class="menulink">PLACES</a></td>
+<td class="nav bar" onmouseover="showMenu(4, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/tocthings.htm" class="menulink">THINGS</a></td>
+<td class="nav bar" onmouseover="showMenu(5, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/tocwords.htm" class="menulink">WORDS</a></td>
+<td class="nav bar" onmouseover="showMenu(6, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/tocdeeds.htm" class="menulink">DEEDS</a></td>
+<td class="nav curr" onmouseover="showMenu(7, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/toctimes.htm" class="menulink">TIMES</a></td>
+<td class="nav bar" onmouseover="showMenu(8, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/tocevents.htm" class="menulink">LIFE CYCLE</a></td>
+<td class="nav bar" onmouseover="showMenu(9, this);" onmouseout="hideMenu();"><a href="http://www.jewfaq.org/tocreference.htm" class="menulink">REFERENCE</a></td>
+</tr>
+</tbody></table>
+<p>
+</p><table cellpadding="10" cellspacing="0" class="PageText">
+<tbody><tr>
+<td valign="top" bgcolor="#FFDD99" width="180">
+<div class="Menu">
+<p class="L1">
+<b>Calendar: Closer Look</b>
+</p>
+<table cellspacing="0" cellpadding="0" class="L3">
+<tbody><tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/calendr2.htm#Essentials">Calendar Essentials</a></td></tr>
+<tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/calendr2.htm#Calculating">Calculating the Calendar</a>
+<table cellspacing="0" cellpadding="0" class="L3">
+<tbody><tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/calendr2.htm#RH">Rosh Hashanah</a></td></tr>
+<tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/calendr2.htm#NonRH">Other Days</a></td></tr>
+</tbody></table>
+</td></tr>
+<tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/calendr2.htm#Encoding">Encoding the Year</a></td></tr>
+<tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/calendr2.htm#Accuracy">Accuracy of the Calendar</a></td></tr>
+<tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/calendr2.htm#Reading">Further Reading</a></td></tr></tbody></table>
+<table><tbody><tr><td><i>See also:</i>
+<table cellspacing="0" cellpadding="0" class="L3">
+<tbody><tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/current.htm">Current Calendar</a></td></tr>
+<tr><td width="10"></td>
+<td><a href="http://www.jewfaq.org/calendar.htm">Jewish Calendar</a></td></tr>
+</tbody></table>
+</td></tr></tbody></table>
+</div>
+<ul class="social">
+<li><a class="fb sprite" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.jewfaq.org%2Fcalendr2.htm&amp;t=Judaism%20101%3A%20The%20Jewish%20Calendar%3A%20A%20Closer%20Look">Share on Facebook!</a></li>
+<li><a class="tweet sprite" href="http://twitter.com/home?status=Judaism%20101%3A%20The%20Jewish%20Calendar%3A%20A%20Closer%20Look%20-%20http%3A%2F%2Fbit.ly%2F5BU2sm">Tweet This!</a></li><li><a class="twfollow sprite" href="http://www.twitter.com/jewfaq">Follow JewFAQ on Twitter</a></li>
+</ul>
+</td>
+<td valign="top" bgcolor="#FFEECC">
+<table cellpadding="20" align="center">
+<tbody><tr><td>
+<table width="100%"><tbody><tr valign="top"><td><h2>The Jewish Calendar: A Closer Look
+</h2>
+<p class="Level">Level: Intermediate</p>
+</td><td>
+<div class="Summary">
+ • A month is calculated as 29 days, 12 hours, and 793 "parts"<br>
+ • Leap years occur in years 3, 6, 8, 11, 14, 17 and 19 of a 19-year cycle<br>
+ • Adjustments (dechiyot) prevent round off the date calculated<br>
+ • Dechiyot prevent oddities in the length of the year<br>
+ • Dechiyot prevent holidays from falling on the wrong day of the week<br>
+ • Some months have variable lengths<br>
+ • There are 14 possible formats of year, identified by codes<br>
+ • The calendar is not perfect, but it is very accurate<br>
+</div>
+</td></tr></tbody></table>
+
+<p>
+The basics of the Jewish calendar were explained on the 
+<a href="http://www.jewfaq.org/calendar.htm">previous page</a>, and will be mentioned only in passing 
+here. This page is intended for those who are interested in a deeper 
+understanding of the workings of Rabbi Hillel II's fixed calendar, or those who 
+want to be able to build their own Jewish calendar computer programs. 
+</p>
+<p>
+Although this page will focus primarily on calendar calculations, I encourage 
+you not to dismiss this as purely a mathematical exercise devoid of spiritual 
+value. The <a href="http://www.jewfaq.org/defs/sages.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">sages</a> emphasized the value of studying 
+astronomy as a way of appreciating the greatness of the Creator's work. This 
+page does focus on some arcane mathematics, but do not be intimidated by it: 
+the Jewish scholar <a href="http://www.jewfaq.org/defs/rambam.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Rambam</a> wrote that, "the method 
+of the fixed calendar is one which an average school child can master in 3 or 4 
+days." (Hilkhot Qiddush HaHodesh 11:4). A lot of the confusion people 
+experience stems from variations in the way different sources say the same 
+thing, and the way some sources use familiar terms to mean unfamiliar things. I 
+will do my best to keep these variations straight for you. 
+</p>
+<p>
+This page includes JavaScript that performs all of the calculations described, 
+in the order that the concepts are presented here and with detailed comments. 
+Those who are comfortable with programming languages may find it faster and 
+easier to understand the math by looking at the code. This code is not 
+necessarily the best or most efficient script possible, but it's not intended 
+to be; it's intended to illustrate how the calendar is calculated. Despite the 
+inefficiency of this code, I have no doubt that it will be appearing on other 
+websites in short order. Would it kill you to give me credit and a link back? 
+</p>
+<h3 id="Essentials">Calendar Essentials</h3>
+<p>
+The Jewish calendar is based on three astronomical phenomena: the rotation of 
+the Earth about its axis (a day); the revolution of the moon about the Earth (a 
+month); and the revolution of the Earth about the sun (a year). These three 
+phenomena are independent of each other, so there is no direct correlation 
+between them. On average, the moon revolves around the Earth in about 29½ 
+days. The Earth revolves around the sun in about 365¼ days, that is, about 
+12 lunar months and 11 days. 
+</p>
+<p>
+To coordinate these three phenomena, and to accommodate certain ritual 
+requirements, the Jewish calendar consists of 12 or 13 months of 29 or 30 days, 
+and can be 353, 354, 355, 383, 384 or 385 days long. The keystone of the 
+calendar is the new moon, referred to in Hebrew as the molad. 
+</p>
+<p>
+A new month on the Jewish calendar begins with the molad, (pronounced 
+moh-LAHD). Molad is a Hebrew word meaning "birth," and refers to what we call 
+the "new moon" in English. The molad for the month of 
+<a href="http://www.jewfaq.org/defs/tishri.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Tishri</a> (the month that starts with 
+<a href="http://www.jewfaq.org/defs/rosh.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Rosh Hashanah</a>) is the most important one for 
+calendar calculations, and is referred to as Molad Tishri. 
+</p>
+<p>
+Note that the calculated molad does not necessarily correspond precisely to the 
+astronomical new moon. The length of time from one astronomical new moon to the 
+next varies somewhat because of the eccentric orbits of the Earth and Moon; 
+however, the moladot of Rabbi Hillel's calendar are set using a fixed average 
+length of time: 29 days, 12 hours, and 793 "parts" (or in Hebrew, 
+<i>chalakim</i>). The amount of time is commonly written in an abbreviated 
+form: 29d 12h 793p. 
+</p>
+<p>
+A "part" (or in Hebrew, <i>cheilek</i>) is a unit of time used in the Jewish 
+calendar, equal to 3-1/3 seconds. There are 18 parts in a minute and 1,080 
+parts in an hour. Most sources express time from calendar calculations in days, 
+hours and parts, although some sources break the parts down into minutes. For 
+example, the period between moladot could be written as 29 days, 12 hours, 44 
+minutes and 1 part (29d 12h 44m 1p), because 793 parts is 44 minutes and 1 part 
+(793 = 44 times 18 parts plus 1 part) . This makes the resulting times look 
+somewhat more familiar, but it increases the number of calculations, so we will 
+stick with days, hours and parts. 
+</p>
+<p>
+The same shorthand can be used to express the time when a molad occurs. The 
+time is normally expressed as a day of the week, along with the hours and parts 
+(or hours, minutes and parts). For example, the time of a molad might be 
+expressed as 2d 12h 1005p (or 2d 12h 55m 15p), meaning that it occurs on Monday 
+(the second day) at the 12th hour and 1005 parts. 
+</p>
+<p>
+The "hours" used to calculate the molad are standard 1/24 of a day hours. Note 
+that this differs from the "hours" used for ritual scheduling, which are 1/12 
+of the time from sunrise to sunset. For example, at Pesach (Passover), we are 
+required to stop eating chametz at the end of the "fourth hour "of the morning 
+on Nissan 14, that is, at the end of 1/3 of the time between sunrise and 
+sunset. These "seasonal hours" vary depending on the time of the year; molad 
+hours are constant. The time for the molad is Jerusalem Solar Time, which is 
+not necessarily the same as your local time. It is also not necessarily the 
+same as the time on the clock, even in Jerusalem. This fact has no effect on 
+your calculations, but is worth knowing. 
+</p>
+<p>
+The Jewish "day" starts at sunset, rather than at midnight. If you read the 
+story of creation in Genesis Ch. 1, you will notice that it says, "And there 
+was evening, and there was morning, one day." From this, we infer that a day 
+begins with evening, that is, at sunset. Accordingly, most sources discussing 
+the molad use 6PM of the preceding evening as the "zero hour." In our example, 
+2d 12h 1005p, the 12h means the 12th hour after 6PM, that is, 6AM. If a molad 
+occurs at 2d 4h 0p, this means that it occurs at 10PM on <i>Sunday</i> night, 
+because the second day (Monday) begins at 6PM of the preceding evening 
+(Sunday). Some sources, however, use the more familiar Western conventions and 
+use midnight as the zero hour. Be very careful to check which system is being 
+used when you rely on times given by any source! If the time is referred to as 
+"<a href="http://www.jewfaq.org/defs/rambam.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Rambam</a> time" or something similar, then you know 
+it uses 6PM as the zero hour. On this page, I am using Rambam time, but some 
+well-respected Orthodox sources in America use midnight as their zero hour. As 
+long as you are consistent, you will get the same result under either system. 
+</p>
+<h3 id="Calculating">Calculating the Calendar</h3>
+<script type="text/javascript" src="./Judaism 101_ The Jewish Calendar_ A Closer Look_files/calscript.js.txt"></script> 
+<p>
+Here is an overview of the steps involved in calculating the date of Rosh 
+Hashanah on the Jewish calendar: 
+</p>
+<ol>
+<li>Start with a known molad (and the corresponding secular date, if you wish 
+to convert your resulting date to a secular date). </li>
+<li>Determine the number of months between the known molad and 
+<a href="http://www.jewfaq.org/defs/tishri.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Tishri</a> of the year of the date you are 
+calculating. </li>
+<li>Multiply the number of months by the length of the molad: 29d 12h 793p. </li>
+<li>Add the result to the known starting molad. </li>
+<li>Apply the dechiyot (rules of postponement) to determine the date of 
+<a href="http://www.jewfaq.org/defs/rosh.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Rosh Hashanah</a> for the year of your date. </li>
+<li>To get the secular date, add the number of days elapsed calculated above to 
+the secular starting date. </li>
+</ol>
+<p>
+If you want to calculate a date other than Rosh Hashanah, you will have to 
+calculate either that year's Rosh Hashanah, the following year's Rosh Hashanah 
+or both and use this information to work out the date. 
+</p>
+<p>
+We will now look at these steps in detail, illustrating the techniques by 
+calculating the dates of <a href="http://www.jewfaq.org/defs/rosh.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Rosh Hashanah</a> and 
+<a href="http://www.jewfaq.org/defs/pesach.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Pesach (Passover)</a> in the year 5775 (2014-2015) 
+using 5732 as our starting point. As I said above, if you are comfortable with 
+JavaScript, you may find that it is faster and easier to understand these 
+concepts by viewing my code <a href="./Judaism 101_ The Jewish Calendar_ A Closer Look_files/calscript.js.txt">here</a>. This code is 
+designed to illustrate calendar principles and is not the most efficient code 
+possible. If you choose to use it in your own work despite this warning, would 
+it kill you to give me credit and a link back? 
+</p>
+<p>
+<b> Step 1: Start with a Known Molad </b> 
+</p>
+<p>
+To perform any calculations on the Jewish calendar, you need a starting point, 
+preferably the molad of <a href="http://www.jewfaq.org/defs/tishri.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Tishri</a> for a specific 
+year, along with the corresponding secular date if you want to be able to 
+convert the Hebrew date to secular. It is not possible to work out a molad from 
+first principles, because the first molad of creation (known as Molad Tohu) did 
+not occur at 0d 0h 0p! 
+</p>
+<p>
+I like to base my calculations on the molad of Tishri 5732, which occurred at 
+2d 7h 743p (using 6PM as the zero hour), and corresponded to the secular date 
+September 20, 1971. I use this particular year because it is the first Molad 
+Tishri after 1/1/1970 (Javascript's 0 date) that is not subject to dechiyot 
+(postponements), which complicate secular date conversions. If you will be 
+calculating dates in the past and would like to avoid the complications of 
+subtracting dates, you may prefer to work with an earlier molad, such as Tishri 
+5661 (9/24/1900), 2d 11h 9p, or even Molad Tishri 5558 (9/21/1797), 5d 11h 
+607p. I'm sure our Christian friends are primarily interested in knowing Molad 
+Tishri 3762 (the year 1), or some other year in that lifetime. Unfortunately, 
+the program I use to calculate molads overflows after 3861 (the year 100), so 
+you'll have to work out the rest yourself: Molad Tishri 3869 (9/22/108, the 
+earliest one I can work out that is not subject to postponements) is 7d 8h 
+957p. A more interesting base from my perspective is Molad Tishri 4120 
+(9/10/359), 5d 8h 29p, which is the first non-postponed year after Rabbi Hillel 
+II developed this calendar! Any calculations before that calendar was developed 
+do not necessarily correspond to what people in those times observed. In 
+addition, it is very complicated to convert a Hebrew date to a secular date 
+before the Gregorian calendar reforms, which took effect at different times in 
+different countries (introduced in 1582 but not adopted in America until 1752!). 
+</p>
+<p>
+<b> Step 2: Determine the Number of Months to Tishri of Your Year </b> 
+</p>
+<p>
+The next step is to determine how many months are between your starting point 
+and Tishri of the year of your end point. There are exactly 235 months in every 
+19-year cycle of leap years (12 12-month years plus 7 13-month years), but if 
+your number of years is not evenly divisible by 19, then you will have to 
+determine whether each remaining year is a regular year (12 months) or a leap 
+year (13 months). 
+</p>
+<p>
+Fortunately, the leap year cycle is easily calculated. Leap years occur in 
+years 3, 6, 8, 11, 14, 17 and 19 of a 19-year cycle, and the 19-year cycle 
+begins in the year 1, so you can simply divide the year number by 19 and 
+examine the remainder. If the remainder is 3, 6, 8, 11, 14, 17 or 0 (the 19th 
+year of the cycle) then the year is a leap year. Otherwise, it is not. 
+</p>
+<p>
+There are two cycles between 5732 and 5775, with a remainder of 5 years (5775 - 
+5732 / 19 = 2 remainder 5), that is 470 months from 5732 to 5770. The remaining 
+months before 5775 are: 
+</p>
+<blockquote>
+<table border="1" cellpadding="2">
+<tbody><tr>
+<th>Year</th>
+<th>Divided by 19</th>
+<th>Leap Year?</th>
+<th>Months</th>
+</tr>
+<tr>
+<td>5770</td>
+<td>303 remainder 13</td>
+<td>No</td>
+<td>12</td>
+</tr>
+<tr>
+<td>5771</td>
+<td>303 remainder 14</td>
+<td>Yes</td>
+<td>13</td>
+</tr>
+<tr>
+<td>5772</td>
+<td>303 remainder 15</td>
+<td>No</td>
+<td>12</td>
+</tr>
+<tr>
+<td>5773</td>
+<td>303 remainder 16</td>
+<td>No</td>
+<td>12</td>
+</tr>
+<tr>
+<td>5774</td>
+<td>303 remainder 17</td>
+<td>Yes</td>
+<td>13</td>
+</tr>
+<tr>
+<td colspan="3" align="right">Plus 2 cycles (2*235) </td>
+<td>470</td>
+</tr>
+<tr>
+<td colspan="3" align="right"><b>Total</b></td>
+<td>532</td>
+</tr>
+</tbody></table>
+</blockquote>
+<p>
+<b> Step 3: Multiply the Number of Months by the Length of the Molad </b> 
+</p>
+<p>
+Next, we multiply the number of months by the average length of the molad, 
+which is 29d 12h 793p: 
+</p>
+<ul>
+<li>793p * 532 = 421,876p </li>
+<li>12h * 532 = 6,384h </li>
+<li>29d * 532 = 15,428d </li>
+</ul>
+<p>
+Of course, we will then have to round up the smaller units into the larger 
+units, just as we would round 75 minutes into 1 hour and 15 minutes. Here are 
+the stages of this rounding: 
+</p>
+<p>
+</p>
+<ul>
+<li>421,876 parts / 1,080 parts per hour = 390 hours remainder <b>676 parts</b> </li>
+<li>(6,384 multiplied hours + 390 rounded hours) / 24 hours per day = 282 days 
+remainder <b>6 hours</b> </li>
+<li>15,428 multiplied days + 282 rounded days = <b>15,710 days</b> </li>
+</ul>
+<p>
+We now know the amount of time between our starting molad and our ending molad: 
+15,710d 6h 676p 
+</p>
+<p>
+<b> Step 4: Add the Result to the Starting Molad </b> 
+</p>
+<p>
+Next, we add the elapsed time calculated above to the starting date to get the 
+ending date. Our starting molad is 2d 12h 1005p (using 6PM as 0h). We will not 
+add the days yet, for reasons that will soon become clear. 
+</p>
+<ul>
+<li>676 elapsed parts + 743 starting parts = 1,419 parts </li>
+<li>6 elapsed hours + 7 starting hours = 13 hours </li>
+</ul>
+<p>
+Now we need to do some more rounding: 
+</p>
+<ul>
+<li>1,419 calculated parts / 1,080 parts per hour = 1 hour remainder <b>339 
+parts</b> </li>
+<li>13 calculated hours + 1 rounded hour / 24 hours per day = 0 days remainder 
+<b>14 hours</b> </li>
+<li>15,710 calculated days + 0 rounded days = <b>15,710 days</b> </li>
+</ul>
+<p>
+At this point, we should note the number of days elapsed between our starting 
+point and our ending point: 15,710 days. We must note this at this point in the 
+calculation, after the hours are rounded into the days but before the weekday 
+of the starting molad is added to the number of days. This number of days will 
+be necessary to determine the Gregorian date. Note that if the hours are more 
+than 24 at this point, you will need to round those hours into the days to get 
+the elapsed time. In this calculation, however, the number of hours is only 14. 
+</p>
+<p>
+Let's finish the calculation of the molad, adding the days and determining the 
+day of the week: 
+</p>
+<ul>
+<li>(15,710 calculated days + 2 starting days) / 7 days per week = 2244 weeks 
+remainder <b>4 days</b> </li>
+</ul>
+<p>
+The remainder of 4 days gives us the day of the week for our molad, so the 
+resulting molad is: 4d 14h 339p, that is, Wednesday in the 14th hour (8 am) and 
+339 parts, with 15,710 elapsed days. Note that if the remainder is 0 days, the 
+molad is 7d (Shabbat), because 7 days / 7 days per week = 1 week remainder 0 days. 
+</p>
+<p>
+<b> Step 5: Apply the Dechiyot </b> 
+</p>
+<p>
+There are four rules of postponement known as dechiyot, pronounced 
+d'-khee-YOHT, where "kh" is a throat-clearing noise (singular: dechiyah). These 
+rules postpone the date of Rosh Hashanah, but do not affect the calculated time 
+of the molad. One of the dechiyot is a general rule of rounding while the rest 
+are designed to prevent oddities in the length of the year and the date of Rosh 
+Hashanah. 
+</p>
+<p>
+<u>Dechiyah 1: Molad Zakein</u> 
+</p>
+<p>
+The first dechiyah is molad zakein, meaning an "old" molad. If the molad occurs 
+at or after noon (that is, 18h where 6PM is 0h or 12h where midnight is 0h), 
+the molad is considered to be "old" and we round to the next day. This rule is 
+quite commonly applied, affecting a quarter of all years (half if you use 
+midnight as the 0 hour). 
+</p>
+<p>
+If noon seems a bit early to be considering the molad "old," remember that the 
+Jewish "day" starts at sunset. The rule of molad zakein simply means that a 
+molad at or after noon relates to the "day" that starts at the next sunset 
+(4-10 hours later) rather than the previous sunset (14-20 hours earlier). This 
+rationale is clear from the Rambam notation, where 6PM is 0h and a Molad Zakein 
+is one that occurs at or after 18h in a 24h day. 
+</p>
+<p>
+Interestingly, Molad Zakein is the reason why you will get the same result 
+regardless of whether you use 6PM or midnight as your zero hour. With midnight 
+as your zero hour, Molad Zakein applies to molads after 12h, applying in half 
+of all years. With 6PM as your zero hour, Molad Zakein only applies in one 
+quarter of all years, but molads between 6PM and midnight are already 
+considered to be part of the next day, so the result is the same! 
+</p>
+<p>
+Our molad occurs at 14h in Rambam notation, so it is not a molad zakein and 
+Rosh Hashanah stays on the calculated date for now. 
+</p>
+<p>
+Note that when dechiyot like this apply, a day must be added to the elapsed 
+time for purposes of calculating the Gregorian equivalent date, but the molad 
+does not change. The unchanged molad is used for purposes of calculating 
+subsequent years and for certain religious purposes. For example, in 5760, the 
+calculated molad was 6d 21h 801p. Molad Zakein pushed Rosh Hashanah to the next 
+day, but if you were to calculate a subsequent date using 5760 as your base, 
+you would calculate from 6d (Friday), not from Saturday. This is why it is best 
+to start with a molad that is not subject to postponements. 
+</p>
+<p>
+<u>Dechiyah 2: Lo A"DU Rosh</u> 
+</p>
+<p>
+<img src="./Judaism 101_ The Jewish Calendar_ A Closer Look_files/adu.png" width="89" height="45" align="right" alt="Alef-Dalet-Vav" title="Alef-Dalet-Vav"> 
+The second dechiyah is known as Lo A"DU or Lo A"DU Rosh. This rule states that 
+<a href="http://www.jewfaq.org/defs/rosh.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Rosh Hashanah</a> cannot occur on a Sunday (Day 1), a 
+Wednesday (Day 4) or a Friday (Day 6). The word Lo means "Not," and the word 
+A"DU is a way of pronouncing Alef-Dalet-Vav, letters with the numerical values 
+1, 4 and 6 (see <a href="http://www.jewfaq.org/alephbet.htm#Numbers">Hebrew Alphabet - Numerical 
+Values</a>). If the calculated molad occurs on one of these days of the week, 
+Rosh Hashanah is postponed by a day to prevent other problems with the 
+calendar. If Rosh Hashanah fell on a Wednesday or Friday, then 
+<a href="http://www.jewfaq.org/defs/yomkippur.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Yom Kippur</a> would fall on a Friday or Sunday, 
+which is undesirable. If Rosh Hashanah fell on a Sunday, the 
+<a href="http://www.jewfaq.org/defs/hoshanah.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Hoshanah Rabbah</a> would fall on a Saturday, 
+making it impossible to observe some of the day's customs. 
+</p>
+<p>
+This dechiyah is also commonly applied, as you might imagine. It applies to 
+three out of seven days, so one would expect it to occur almost half of the time. 
+</p>
+<p>
+Note that the dechiyot of molad zakein and Lo A"DU Rosh can work in 
+combination: a molad at 5d 19h 0m 0p (Thursday at 1PM) is rounded to Friday by 
+the rule of Molad Zakein, then postponed to Saturday by the rule of Lo A"DU 
+Rosh, even though the original molad was on a valid day of the week. On the 
+other hand, a molad at 4d 19h 0m 0p (Wednesday at 1PM) is rounded to Thursday 
+by Molad Zakein, and Lo A"DU Rosh does not apply: even though the molad 
+occurred on Wednesday, Molad Zakein has already moved it off of that date so Lo 
+A"DU Rosh is not necessary. This is why the rule of Molad Zakein must be 
+checked before the rule of Lo A"DU Rosh. 
+</p>
+<p>
+Our molad occurs on 4d, Wednesday, so it is postponed to Thursday. You should 
+add 1 to your elapsed time so your secular date conversion will be correct. 
+There are now 15,711 elapsed days. 
+</p>
+<p>
+<u>Dechiyah 3: Gatarad</u> 
+</p>
+<p>
+The remaining two dechiyot are much less commonly applied. 
+</p>
+<p>
+Dechiyah Gatarad holds that if Molad Tishri in a simple (12-month, non-leap) 
+year occurs on a Tuesday at 9h 204p or later, Rosh Hashanah is postponed to the 
+next day (a Wednesday, which by the effect of Lo A"DU Rosh would then be 
+postponed to Thursday). 
+</p>
+<p>
+<img src="./Judaism 101_ The Jewish Calendar_ A Closer Look_files/gatarad.png" width="116" height="45" align="right" alt="Gimel-Teit-Reish-Dalet" title="Gimel-Teit-Reish-Dalet">The 
+name, Gatarad, is a mnemonic for the rule. In Hebrew, Gatarad it is spelled 
+Gimel-Teit-Reish-Dalet. Using letters as numerals, Gimel is 3, and represents 
+Tuesday. Teit is 9 and represents the 9th hour (that is, 9h in Rambam notation, 
+but 3h in midnight-based notation). Reish is 200 and Dalet is 4, representing 
+204 parts. 
+</p>
+<p>
+Why does such a complicated rule exist? This rule prevents the possibility that 
+a year might be 356 days, an invalid length. Consider: a Molad Tishri at 3d 9h 
+204p would not be postponed by Molad Zakein or Lo A"DU Rosh. Add 12 lunar 
+cycles (354d 8h 876p) to the next year's Rosh Hashanah and you get 7d 18h 0p 
+with 354 days elapsed. Molad Zakein applies to the following year, postponing 
+Rosh Hashanah to the next day, a Sunday, with 355 days elapsed. Lo A"DU Rosh is 
+then triggered, postponing Rosh Hashanah and leaving 356 days elapsed and 
+making the current year an invalid length. Gatarad takes days away from the 
+following year and adds them to the preceding year, so both years are a valid 
+length. 
+</p>
+<p>
+Note that Gatarad invariably triggers Lo A"DU Rosh. Gatarad only applies when 
+Rosh Hashanah is Tuesday and Gatarad postpones Rosh Hashanah to Wednesday. Lo 
+A"DU Rosh then postpones Rosh Hashanah to Thursday. Some programmers like to 
+check Gatarad before checking Lo A"DU Rosh; others check Gatarad after Lo A"DU 
+Rosh but use this rule to add two days (the Gatarad day plus the resulting Lo 
+A"DU Rosh day). Either way, if Gatarad applies, Rosh Hashanah falls on Thursday. 
+</p>
+<p>
+Note also that this rule is not combined with Molad Zakein. If Molad Zakein 
+applies to the current year, Gatarad is unnecessary; thus Gatarad applies only 
+to molads between 9h 204p and 17h 1079p. 
+</p>
+<p>
+As you might imagine, this rule is not commonly applied. It applies only in 
+non-leap years (12 out of 19 years) when the molad occurs on Tuesday (1 out of 
+7 days) between the 9th hour and the 18th hour (9 out of 24 hours). It occurs 
+about three times a century. It last occurred in 5745 (1984-85) and will not 
+occur again until 5796 (2035-36). 
+</p>
+<p>
+<u>Dechiyah 4: Betutkafot</u> 
+</p>
+<p>
+Like Dechiyah Gatarad, this rule is not very commonly applied and is designed 
+to prevent a year from having an invalid length. Dechiyah Betutkafot prevents a 
+leap-year from having 382 days (too few days) by postponing Rosh Hashanah of 
+the non-leap year following the leap year. 
+</p>
+<p>
+<img src="./Judaism 101_ The Jewish Calendar_ A Closer Look_files/betutkafot.png" width="185" height="45" align="right" alt="Beit-Teit-Vav-Tav-Qof-Pei-Teit" title="Beit-Teit-Vav-Tav-Qof-Pei-Teit">Also 
+like Dechiyah Gatarad, the name of the rule tells you how it is calculated: if 
+Molad Tishri in a year following a leap year occurs on Monday (Beit, 2) after 
+the 15th hour (Teit-Vav, 15 in Rambam notation, but 9h in midnight-based 
+notation) and 589 parts (Tav-Kaf-Pei-Teit, 589), then it is postponed to the 
+next day. The rule is applied only if the actual molad occurs on Monday, not if 
+it is postponed to Monday. Like Gatarad, the rule really only applies to molads 
+before noon (18h), because Molad Zakein handles the postponements for molads at 
+or after noon. Unlike Gatarad, Betutkafot does not trigger Lo A"DU Rosh, 
+because Betutkafot postpones Rosh Hashanah from a Monday to a Tuesday and 
+Tuesday is an acceptable day for Rosh Hashanah. 
+</p>
+<p>
+The reasoning behind this rule is similar to the reasoning behind Gatarad: the 
+13 lunar cycles of the preceding year are 383d 21h 589p. If this year's Molad 
+Tishri occurs after 2d 15h 589p, then the preceding year's Molad Tishri must 
+have occurred on or after 3d 18h 0p. This is 384 elapsed days, but the 
+preceding year's Molad Tishri was a Molad Zakein postponing Rosh Hashanah to 
+Wednesday, which triggers Lo A"DU, moving Rosh Hashanah to Thursday. The two 
+postponements shorten the preceding year to 382 days. Dechiyah Betutkafot 
+postpones the current year's Rosh Hashanah by one day to increase the preceding 
+year to a permissible 383 days. 
+</p>
+<p>
+This is the rarest of the four dechiyot, applying only in the year after a leap 
+year (7 out of 19 years) when the molad occurs on Monday (1 out of 7 days) 
+between the 15th hour and the 18th hour (3 out of 24 hours). It applies once or 
+twice a century. The last time it applied was 5766 (2005-06). It will not apply 
+again until 6013 (2252-2253)! 
+</p>
+<p>
+<b> Step 6: Add Elapsed Days to Gregorian Starting Date </b> 
+</p>
+<p>
+To determine the Gregorian date for Rosh Hashanah, you must take the elapsed 
+days calculated in Step 4, add any additional days triggered by the dechiyot in 
+Step 5, and add this number of days to the date of Rosh Hashanah for your known 
+molad. For those following the script: JavaScript doesn't do a great job of 
+handling dates, but the ConvertGreg function adds elapsed dates and returns a 
+properly formatted date (American m/d/yyyy format). If you're trying to do this 
+without writing a program, a spreadsheet such as Microsoft Excel should be able 
+to add a number of days to a date. 
+</p>
+<h4 id="RH">Rosh Hashanah Calculator</h4>
+<p>
+To calculate the date of Rosh Hashanah for any year after 5732 using the 
+principles above: 
+</p>
+<ol>
+<li>Calculate the number of months between 5732 and your year. </li>
+<li>Calculate the amount of time elapsed in those months. </li>
+<li>Add the elapsed time to the molad of 5732 to determine the molad of your 
+year, stopping to note the elapsed days before adding the day of week from the 
+5732 molad. </li>
+<li>Determine whether any dechiyot apply and if so, add them to the elapsed 
+days determined above. </li>
+<li>Add the days elapsed to the date of Rosh Hashanah in 5732. </li>
+</ol>
+<p>
+These steps are performed by the function CalcRH in the JavaScript, used by the 
+form below. Just type the Hebrew year and the secular date will appear, using 
+only the functions discussed above. Click the button below to try it! 
+</p>
+<table border="5" cellpadding="2" align="center">
+<tbody><tr>
+<td><form action="http://www.jewfaq.org/calendr2.htm" onsubmit="if (RHYear.value &gt; 5731) { RHSecular.value = CalcRH(RHYear.value) } else { alert(&#39;Year must be greater than 5731&#39;) } return false;"> 
+<table>
+<tbody><tr>
+<td>Hebrew Year </td>
+<td><input type="text" name="RHYear" value="5772" size="4"> </td>
+<td><input type="submit" value="Get Date!"> </td>
+</tr>
+<tr>
+<td>Secular Date </td>
+<td><input type="text" name="RHSecular" size="10"> </td>
+</tr>
+</tbody></table></form> </td>
+</tr>
+</tbody></table>
+<h4 id="NonRH">Calculating Days Other Than Rosh Hashanah</h4>
+<p>
+The principles and JavaScript above are sufficient to allow you to convert Rosh 
+Hashanah to a Gregorian date for any year. However, if you want to calculate a 
+date other than Rosh Hashanah, you will have to calculate either that year's 
+Rosh Hashanah, the following year's Rosh Hashanah or both and use this 
+information to work out the date. The information you need varies depending on 
+the month of the date you are calculating 
+</p>
+<dl>
+<dt><b>Tishri</b> </dt>
+<dd>Tishri is the month of Rosh Hashanah, so you simply add the date of the 
+month to Rosh Hashanah and subtract 1 (because Rosh Hashanah is Day 1). </dd>
+<dt><b>Cheshvan</b> </dt>
+<dd>Cheshvan is the second month of the calendar year, and the preceding month 
+of Tishri is always 30 days, so you simply take the current Rosh Hashanah, add 
+29 days (30 - 1 for Rosh Hashanah) and add the date of the month. </dd>
+<dt><b>Kislev</b> </dt>
+<dd>Kislev is the hardest month to calculate. You cannot simply work forward 
+from the current year's Rosh Hashanah, because the preceding month of Cheshvan 
+can be 29 or 30 days, nor can you work backward from the next year's Rosh 
+Hashanah, because Kislev itself can also be 29 or 30 days. To calculate the 
+length of Kislev, you need to know the date of Rosh Hashanah of both the 
+current year and the next year, then calculate the difference between them to 
+determine the length of the current year. If the year is 353, 354, 383 or 384 
+days, then Cheshvan is 29 days and you can determine a date in Kislev taking 
+the current Rosh Hashanah, adding 58 days, then adding the date of the month. 
+If the year is 355 or 385 days, then Cheshvan is 30 days and you can determine 
+a date in Kislev by taking the current Rosh Hashanah, adding 59 days, then 
+adding the date of the month.</dd>
+<dt><b>Tevet, Shevat</b> </dt>
+<dd>The remaining months of the year are of unchanging length, but the number 
+of months varies depending on whether the year is a leap year! Tevet and Shevat 
+are best calculated by working backwards from the following year's Rosh 
+Hashanah and subtracting an additional 30 days in a leap year. Tevet's offset 
+in a non-leap year is -266; Shevat's is -237. </dd>
+<dt><b>Adar, Adar I and Adar II</b> </dt>
+<dd>Adar is always offset -207 from the following Rosh Hashanah; however, in 
+regular years, Adar is the 12th month of the year (starting from Nissan), and 
+in leap years, is known as Adar II and is the 13th month of the year. Adar I, 
+the extra month inserted as the 12th month in leap years, is always offset -237 
+days from Rosh Hashanah. </dd>
+<dt><b>Nissan, Iyar, Sivan, Tammuz, Av, Elul</b> </dt>
+<dd>The remaining months of the year are all of unchanging length and not 
+affected by leap years. Simply subtract the appropriate number of days from the 
+following year's Rosh Hashanah and add the date of the month. </dd>
+</dl>
+<p>
+</p>
+<p>
+The form below uses the functions above to calculate the dates of major Jewish 
+holidays for any Hebrew year. 
+</p>
+<form action="http://www.jewfaq.org/calendr2.htm" onsubmit="if (OtherYear.value &gt; 5731) { MD = HolidayDate.value.split(&#39;-&#39;); OtherDate.value = CalcOther(MD[0], MD[1], OtherYear.value); } else { alert(&#39;Year must be greater than 5731&#39;) } return false;"> 
+<table align="center">
+<tbody><tr>
+<td><b>Holiday</b></td>
+<td><b>Hebrew Year</b></td>
+</tr>
+<tr>
+<td>
+<select name="HolidayDate">
+<option selected="selected" value="7-1">Rosh Hashanah (1 Tishri) </option>
+<option value="7-10">Yom Kippur (10 Tishri) </option>
+<option value="7-15">Sukkot (15 Tishri) </option>
+<option value="7-22">Shemini Atzeret (22 Tishri) </option>
+<option value="7-23">Simchat Torah (23 Tishri) </option>
+<option value="9-25">Chanukkah (25 Kislev) </option>
+<option value="10-10">Fast of Tevet (10 Tevet) </option>
+<option value="11-15">Tu B'Shevat (15 Shevat) </option>
+<option value="12-14">Purim Katan (14 Adar I) </option>
+<option value="13-14">Purim (14 Adar) </option>
+<option value="1-15">Pesach (Passover) (15 Nissan) </option>
+<option value="1-27">Yom Ha-Shoah (27 Nissan) </option>
+<option value="2-5">Yom Ha-Atzmaut (5 Iyar) </option>
+<option value="3-6">Shavu'ot (6 Sivan) </option>
+<option value="4-17">Fast of Tammuz (17 Tammuz) </option>
+<option value="5-9">Tisha B'Av (9 Av) </option>
+<option value="6-1">Rosh Chodesh Elul (1 Elul) </option>
+</select>
+</td>
+<td><input type="text" name="OtherYear" value="5772" size="4"></td>
+</tr>
+<tr>
+<td><input type="text" name="OtherDate" size="10"></td>
+<td><input type="submit" value="Get Date!"></td>
+</tr>
+</tbody></table></form>
+<h3 id="Encoding">Encoding the Year</h3>
+<p>
+Calendar scholars use a system of encoding to describe each Jewish year. This 
+encoding consists of three <a href="http://www.jewfaq.org/defs/alephbet.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Hebrew letters</a> that 
+serve as a shorthand for important features of the calendar, and once you work 
+out the code, you know everything you need to know about the calendar. You 
+don't need to know the encoding system to be able to calculate the calendar, 
+but it may help you understand important features of the calendar. 
+</p>
+<p>
+The first letter is either Pei or Mem. Pei stands for the Hebrew word P'shuta 
+(simple), and refers to a 12-month regular year. Mem stands for Me'uberet, and 
+refers to a 13-month leap year. 
+</p>
+<p>
+The second letter indicates which day of the week Rosh Hashanah occurs. Letters 
+of the Hebrew alphabet also serve as numerals (see 
+<a href="http://www.jewfaq.org/alephbet.htm#Numbers">Hebrew Alphabet - Numerical Values</a>), and 
+this letter indicates whether Rosh Hashanah occurs on a Monday (Beit, that is, 
+2), a Tuesday (Gimel, 3), a Thursday (Hei, 5) or a Saturday (Zayin, 7). Why not 
+Alef (1), Dalet (4) or Vav (6)? Because Dechiyah Lo A"DU Rosh, discussed above, 
+prevents Rosh Hashanah from falling on Sunday, Wednesday or Friday. 
+</p>
+<p>
+The third letter tells you the length of the year, which can be 353, 354 or 355 
+days (in a leap year, 383, 384 or 385). This variation comes in part from the 
+length of the molad cycles (which add about 8 or 21 hours to the time of day 
+each year, which sometimes rolls over to another day) and in part from the 
+application of the dechiyot. A year's length can be encoded as Cheit for 
+Chaseir (deficient or lacking, a 353 or 383 day year), Kaf for K'Seder (in 
+order, a 354 or 384 day year) or Shin for Shaleim (whole or complete, a 355 or 
+385 day year). In a Chaseir year, both Cheshvan and Kislev have 29 days. In a 
+Shaleim year, both Cheshvan and Kislev have 30 days. In a K'Seder year, 
+Cheshvan has 29 days and Kislev has 30 days. 
+</p>
+<p>
+Under this system of encoding, the current year (5765) is coded Mem-Hei-Cheit, 
+because it is a leap year (Mem), Rosh Hashanah started on a Thursday (Hei), and 
+the year will have 383 days (Cheit). Next year (5766) would be encoded as 
+Pei-Gimel-Kaf because it will be a regular (non-leap) year, it will start on a 
+Tuesday, and it will have 354 days. 
+</p>
+<p>
+Some people code the years differently: the day of Rosh Hashanah as the first 
+letter (instead of the second), the length of the year as the second letter 
+(instead of the third), and the day of the week that 
+<a href="http://www.jewfaq.org/defs/pesach.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Pesach</a> (Passover) starts as the third. This third 
+letter can be Alef (1, Sunday) through Zayin (7, Saturday). The advantage of 
+this system is that it tells you the day of the week that both Pesach and Rosh 
+Hashanah occur, which has some effect on their observances, and once these are 
+known, we can infer the days of the other major festivals 
+(<a href="http://www.jewfaq.org/defs/sukkot.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Sukkot</a> and 
+<a href="http://www.jewfaq.org/defs/shavuot.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Shavu'ot</a>). The disadvantage is that nothing in 
+this system tells you whether the year is a leap year, although this can be 
+inferred if you know the calendar well enough. 
+</p>
+<p>
+Although there are many theoretical permutations of these three-letter codes, 
+only 14 of them are actually possible given the constraints of calendar 
+calculations. This means that there are only 14 different possible layouts for 
+an annual Jewish calendar. Keep in mind, though, that these 14 different 
+layouts don't necessarily correspond to the same Gregorian days, but they do 
+correspond to the distribution of <a href="http://www.jewfaq.org/defs/readings.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">weekly Torah 
+readings</a>. For example, in the year 5765, a Mem-Hei-Cheit year, the Torah 
+portion Emor was read on 5 Iyar, which was May 14, 2005. The next Mem-Hei-Cheit 
+year will be 5768, and Parshat Emor will be read on 5 Iyar in that year too, 
+but 5 Iyar will occur on May 10, 2008. Contrast this with 5766, a Pei-Gimel-Kaf 
+year, when Emor will be read on 15 Iyar (May 13, 2006). 
+</p>
+<p>
+The following table shows which parshiyot are combined in which year encodings: 
+</p>
+<table border="1" cellpadding="2" align="center">
+<tbody><tr>
+<th>Year Encoding</th>
+<th>Parshiyot Combined</th>
+</tr>
+<tr valign="top">
+<td>Mem-Beit-Cheit</td>
+<td>Chukat-Balak<br>
+Matot-Masei<br>
+Nitzavim-Vayeilech</td>
+</tr>
+<tr>
+<td>Mem-Beit-Shin</td>
+<td>Matot-Masei</td>
+</tr>
+<tr>
+<td>Mem-Gimel-Kaf</td>
+<td>Matot-Masei</td>
+</tr>
+<tr>
+<td>Mem-Hei-Cheit</td>
+<td>none</td>
+</tr>
+<tr>
+<td>Mem-Hei-Shin</td>
+<td>Nitzavim-Vayeilech</td>
+</tr>
+<tr valign="top">
+<td>Mem-Zayin-Cheit</td>
+<td>Matot-Masei<br>
+Nitzavim-Vayeilech</td>
+</tr>
+<tr valign="top">
+<td>Mem-Zayin-Shin</td>
+<td>Chukat-Balak<br>
+Matot-Masei<br>
+Nitzavim-Vayeilech</td>
+</tr>
+<tr valign="top">
+<td>Pei-Beit-Cheit</td>
+<td>Vayakhel-Pekudei<br>
+Tazria-Metzora<br>
+Achrei Mot-Kedoshim<br>
+Behar-Bechukotai<br>
+Matot-Masei<br>
+Nitzavim-Vayeilech</td>
+</tr>
+<tr valign="top">
+<td>Pei-Beit-Shin</td>
+<td>Vayakhel-Pekudei<br>
+Tazria-Metzora<br>
+Achrei Mot-Kedoshim<br>
+Behar-Bechukotai<br>
+Chukat-Balak<br>
+Matot-Masei<br>
+Nitzavim-Vayeilech</td>
+</tr>
+<tr valign="top">
+<td>Pei-Gimel-Kaf</td>
+<td>Vayakhel-Pekudei<br>
+Tazria-Metzora<br>
+Achrei Mot-Kedoshim<br>
+Behar-Bechukotai<br>
+Chukat-Balak<br>
+Matot-Masei<br>
+Nitzavim-Vayeilech</td>
+</tr>
+<tr valign="top">
+<td>Pei-Hei-Kaf</td>
+<td>Vayakhel-Pekudei<br>
+Tazria-Metzora<br>
+Achrei Mot-Kedoshim<br>
+Behar-Bechukotai<br>
+Matot-Masei</td>
+</tr>
+<tr valign="top">
+<td>Pei-Hei-Shin</td>
+<td>Tazria-Metzora<br>
+Achrei Mot-Kedoshim<br>
+Behar-Bechukotai<br>
+Matot-Masei</td>
+</tr>
+<tr valign="top">
+<td>Pei-Zayin-Cheit</td>
+<td>Vayakhel-Pekudei<br>
+Tazria-Metzora<br>
+Achrei Mot-Kedoshim<br>
+Behar-Bechukotai<br>
+Matot-Masei</td>
+</tr>
+<tr valign="top">
+<td>Pei-Zayin-Shin</td>
+<td>Vayakhel-Pekudei<br>
+Tazria-Metzora<br>
+Achrei Mot-Kedoshim<br>
+Behar-Bechukotai<br>
+Matot-Masei<br>
+Nitzavim-Vayeilech</td>
+</tr>
+</tbody></table>
+<h3 id="Accuracy">Accuracy of the Jewish Calendar</h3>
+<p>
+At one time, the accuracy of the Jewish calendar was proverbial. But how 
+accurate is it really? 
+</p>
+<p>
+The average lunar month on the Jewish calendar is 29d 12h 793p. The average 
+lunar month as calculated by modern astronomers is 29d 12h 44m 2.8s, that is, 
+29d 12h 792.84p. so the variation is less than two tenths of the smallest unit 
+of measurement recognized by the system, about half of a second. That is quite 
+remarkably accurate. Of course, those lost half-seconds do add up: within in a 
+century, you're off by 10 minutes. 
+</p>
+<p>
+How well does the calendar correspond to the solar year? The 
+<a href="http://www.jewfaq.org/defs/rabbi.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">rabbis</a> recognized long ago that the calendar gains 
+1h 485p in every 19-year cycle, adding up to a day every 300 years or so. This 
+was important to the rabbis in scheduling certain rituals that are based on the 
+solar year rather than the lunar year. We can see this effect when we examine 
+the dates of Rosh Hashanah over time. 
+</p>
+<p>
+Rabbi Hillel II developed the Jewish calendar in the Jewish year 4119. Using 
+his calendar methods as described above, and artificially assuming that the 
+Gregorian calendar we use today was in effect at that time, the date of Rosh 
+Hashanah ranged from August 29 to September 28 between the years 4100 and 4200 
+(the 42nd century). In the present Jewish century (the 58th), the dates of Rosh 
+Hashanah range from September 5 to October 5, a gain of 6 or 7 days. This is 
+considerably more accurate than the Julian calendar used by Christians in Rabbi 
+Hillel's time (which had to be corrected by 11 days a few centuries ago), but 
+you can see that it is gaining some time. 
+</p>
+<p>
+The discrepancy in the Jewish calendar, however, is still less than a lunar 
+month and is therefore as accurate as it is possible to be in a lunisolar 
+calendar. In fact, it takes about 9300 years for this discrepancy to accumulate 
+to a full month of time. The rabbis were aware of the problem, but were quite 
+confident that a new Sanhedrin will be established long before this discrepancy 
+becomes problematic. We still have more than 3500 years to go. 
+</p>
+<h3 id="Reading">Suggestions for Further Reading</h3>
+<p>
+The book that most people recommend for learning about the Jewish calendar is 
+Rabbi Nathan Bushwick's 
+<a href="http://www.amazon.com/exec/obidos/ASIN/0940118173/judaism101">Understanding 
+the Jewish Calendar</a>. I ordered this book while I was writing this page; it 
+took about a month to arrive, and I confess I was a bit disappointed by it. 
+About half of the book was basic astronomy that I learned in fourth grade, and 
+most of the calendar calculations I had learned before the book arrived. 
+Nevertheless, the book did have some interesting insights and thorough citation 
+to <a href="http://www.jewfaq.org/defs/torah.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Torah</a>, <a href="http://www.jewfaq.org/defs/talmud.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Talmud</a> and 
+<a href="http://www.jewfaq.org/defs/rambam.htm" onclick="return ShowDef(this)" onmouseout="hideDef()">Rambam</a> that you may find useful or interesting. 
+</p>
+<hr>
+<center>
+<i>© Copyright 5765-5771 (2005-2011), Tracey R Rich</i><br>
+<font size="-1">If you appreciate the many years of work I have put into this site, 
+show your appreciation by <i>linking</i> to this page, not copying it to your site.
+I can't correct my mistakes or add new material if it's on your site. <a href="http://www.jewfaq.org/copyright.htm">Click Here</a> for more details.</font>
+</center>
+<p class="FooterAll">
+<a href="http://www.jewfaq.org/index.shtml">Home</a> | <a href="http://www.jewfaq.org/nu.htm">What's Nu?</a> | <a href="http://www.jewfaq.org/current.shtml">Current Calendar</a> | <a href="http://www.jewfaq.org/author.htm">About the Author</a> | <a href="http://www.jewfaq.org/glossary.htm">Glossary and Index</a> | 
+<a href="http://www.jewfaq.org/m/calendr2.htm">Mobile Site</a>
+</p>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+<br>
+<center><table width="95%"><tbody><tr>
+<td width="180"></td>
+<td align="center">
+<span class="navbar sprite">
+<a class="prev" href="http://www.jewfaq.org/calendar.htm">Back</a> | 
+<a class="toc" href="http://www.jewfaq.org/toc.htm">Site Map</a> | 
+<a class="next" href="http://www.jewfaq.org/shabbat.htm">Next</a>
+</span>
+</td>
+</tr></tbody></table></center>
+<div id="Pulldown" onmouseover="this.style.visibility=&#39;visible&#39;;" onmouseout="this.style.visibility=&#39;hidden&#39;;" style="left: 1801px; visibility: hidden; top: 81px; overflow: auto;"><table cellpadding="5" cellspacing="0"><tbody><tr onmouseout="hideMenu();"><td class="pulldown"><a href="http://www.jewfaq.org/birth.htm" class="menulink">BIRTH AND THE FIRST MONTH OF LIFE</a></td></tr><tr onmouseout="hideMenu();"><td class="pulldown"><a href="http://www.jewfaq.org/barmitz.htm" class="menulink">BAR MITZVAH, BAT MITZVAH AND CONFIRMATION</a></td></tr><tr onmouseout="hideMenu();"><td class="pulldown"><a href="http://www.jewfaq.org/marriage.htm" class="menulink">MARRIAGE</a></td></tr><tr onmouseout="hideMenu();"><td class="pulldown"><a href="http://www.jewfaq.org/divorce.htm" class="menulink">DIVORCE</a></td></tr><tr onmouseout="hideMenu();"><td class="pulldown"><a href="http://www.jewfaq.org/death.htm" class="menulink">LIFE, DEATH AND MOURNING</a></td></tr><tr onmouseout="hideMenu();"><td class="pulldown"><a href="http://www.jewfaq.org/olamhaba.htm" class="menulink">OLAM HA-BA: THE AFTERLIFE</a></td></tr></tbody></table></div>
+<div id="DefFrame" onmouseover="this.style.visibility=&#39;visible&#39;;" onmouseout="this.style.visibility=&#39;hidden&#39;;" style="visibility: hidden;"></div>
+<div id="Hint"></div>
+<script type="text/javascript" src="./Judaism 101_ The Jewish Calendar_ A Closer Look_files/menus.js"></script>
+
+
+</body></html>

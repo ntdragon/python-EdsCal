@@ -1,0 +1,55 @@
+.........1.........2.........3.........4.........5.........6.........7.........8
+/******************************************************************************/
+/*   AUTHOR: Edward Birdsall            DATE: December 17,1990                */
+/*                                                                            */
+/*   VERSION:                                                                 */
+/*   PURPOSE:                                                                 */
+/*                                                                            */
+/*                                                                            */
+/*                                                                            */
+/*   INPUT FROM:                                                              */
+/*   OUTPUT TO:                                                               */
+/*                                                                            */
+/*                                                                            */
+/*   COMPILOR USED:                                                           */
+/*                                                                            */
+/*   COMPUTER HARDWARE USED:                                                  */
+/*                                                                            */
+/*	DESCRIPTION OF FUNCTIONS AND PROTOTYPES:                                 */
+/*                                                                            */
+/*   User Hello and Goodbye Functions:                                        */
+/*        void greet_user(void);                                              */
+/*             Initial Screen greetings explaining what program they are using*/
+/*             and opens the output text file which serves as a session log   */
+/*        void say_bye_to__user(void);                                        */
+/*             Thanks the user for using the program and closes the output file*/
+/*                                                                            */
+/*   User Input Functions:                                                    */
+/*                                                                            */
+/*                                                                            */
+/*   File Functions:                                                          */
+/*                                                                            */
+/*                                                                            */
+/*   Display Functions:                                                       */
+/*                                                                            */
+/*  Every Program Needs one:                                                  */
+/*        main()                                                              */
+/*             This function, like all good "main"s is just a routing function*/
+/*             controlling program flow, from beginning to end.               */
+/*        void empty_kbd_buf(void)                                            */
+/*             Empties the keyboard buffer of unwanted characters and line feed*/
+/*             that getchar and scanf tend to leave behind in the buffer and  */
+/*             cause all sorts of mayhem the next time you access the keyboard*/
+/*                                                                            */
+/*   RESTRICTIONS:                                                            */
+/*                                                                            */
+/******************************************************************************/
+/* A few definitions */
+
+
+
+/* FUNCTION PROTOTYPES */
+
+
+/**********************/
+/* end of header file */
