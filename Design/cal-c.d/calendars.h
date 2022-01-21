@@ -4,9 +4,9 @@
 /* current v1.00 July 2004                                                    */
 /*============================================================================*/
 /*   Purpose                                                                  */
-/*       This program is
-/*
-/*
+/*       This program is                                                      */
+/*                                                                            */
+/*                                                                            */
 /* -------------------------------------------------------------------------- */
 /*   Platform:  all                                                           */
 /*----------------------------------------------------------------------------*/
@@ -23,7 +23,69 @@
 /******************************************************************************/
 /*************************   typedef, define enum   ***************************/
 /******************************************************************************/
+struct edate {
+     float   secs;    /* seconds from midnight  0->86399 */
+     short   days;    /* days in year 1->365 or 366      */
+     int     year;    /* year                            */
+     float   zone;    /* time zone -12->+12              */
+} edate;
 
+struct gdate {
+     float   secs;
+     short   hour;
+     short   day;
+     int     year;
+     float   zone;
+} gdate;
+
+struct date
+	int month
+	int day
+	int year
+end struct
+
+struct edaet {        /* Internal Earth Date and Time GMT*/
+    float   seconds;    /* seconds from midnight  0->86399 */
+    short   days;    /* days in year 1->365 or 366      */
+    int     year;    /* year  (Gregorian based)         */
+} edaet;
+
+
+
+struct gdates {                /* Gregorian Date - std 24hr clock */
+     struct  etyme     tyme;   /* time of day - 24 hour clock */
+     short   day;              /* day in month     1-31           */
+     int     month;            /* month in year    1-12           */
+     int     year;             /* year             +-nnnnn  CE    */
+     float   zone;             /* local time zone  -12 -> + 12    */
+     int     diwk;    /* day in week      1-7            */
+} gdates;
+
+struct gdatea {       /* Gregorian Date - angular 24hr clock */
+	 struct  atyme     tyme;   /* time of day - angular clock */
+    short   day;     /* day in month     1-31               */
+    int     month;   /* month in year    1-12               */
+    int     year;    /* year            +-nnnnn CE          */
+    int     diwk;    /* day in week     1-7                 */
+} gdatea;
+
+struct hdates {       /* Hobbit Date - std 24hr clock */
+	 struct  etyme     tyme;   /* time of day - 24 hour clock */
+    short   day;     /* day in month     1-30           */
+    int     month;   /* month in year    0-12           */
+    int     year;    /* year             +-nnnnn  CE    */
+    float   zone;    /* local time zone  -12 -> + 12    */
+    int     diwk;    /* day in week      0-7            */
+} hdates;
+
+struct hdatea {       /* Hobbit Date - angular 24hr clock    */
+	 struct  atyme     tyme;   /* time of day - angular clock */
+    short   day;     /* day in month     1-30               */
+    int     month;   /* month in year    0-12               */
+    int     year;    /* year            +-nnnnn CE          */
+    int     diwk;    /* day in week      0-7                */
+} hdatea;
+    
 #define BackSize         50         /* size of backtrack buffer originally 20 */
 
 /******************************************************************************/
@@ -32,6 +94,30 @@
 
 /* Public - used by other modules */
 /*--------------------------------*/
+/* Time */
+/*------*/
+int main( int argc, char **argv)
+int time2zulu (edate itime, edate ftime&)
+int zulu2time (edate itime, float newzone, edate ftime&)
+int time2secs()
+int secs2time ( )
+int 12convert24()
+int 24convert12()
+int angular2zulu (edate itime, edate ftime)
+int zulu2angular (edate itime, edate ftime)
+int internal2Shire()
+int dectime2internal
+int Fixed2internal
+int world2internal
+
+    SecsTo24
+    SecsTo12
+    SecsTo10
+    SecsFrom24
+    SecsFrom12
+    SecsFrom10
+
+int Gregorian2Internal (gdate itime, edate tyme&)
 
 /* Private - for use by this module only */
 /*---------------------------------------*/

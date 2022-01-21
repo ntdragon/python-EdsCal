@@ -10,6 +10,8 @@ calendar and then computing and using the other calendars on the fly.
 
 module EdsCal(Calendar)
 
+     def Gregorian
+     
      def ToJulian
      
      def FromJulian
@@ -105,6 +107,6 @@ module EdsCal(Calendar)
      
      def FromMars
      
-     def TimeToZule
+     def TimeToZulu
      
-     def TimeFrmZulu
+     def TimeFromZulu
