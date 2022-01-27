@@ -49,6 +49,7 @@ Variables:
 
 
 """
+from calendar import *
 from tkinter import *
 
 class MCalendar(Frame):

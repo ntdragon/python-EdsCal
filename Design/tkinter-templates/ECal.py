@@ -49,6 +49,8 @@ Variables:
 
 
 """
+import calendar
+import datetime
 from tkinter import *
 
 class MCalendar(Frame):
@@ -64,32 +66,51 @@ class MCalendar(Frame):
           #=========================================================================================================
           hd = {"loc":"Month Calendar"}
           hdr = { "name":"Ed",  "page":"March 2019 Calendar", "today":"Saturday  March  2, 2019" }
-
-
-          days = ('Sunday Monday Tuesday Wednesday Thursday Friday Saturday Sunday'.split())
+          
+          cal = {"month":"March", "year":"2019", "startwk":0,"calrows":5, "calAt":"Liturgical", "calBt":"US Holidays","calCt":"Birdsall Family", "calDt":"Kirkup Family", "calEt":""}
+          pref = {  "startDay":0,  "calAclr": "yellowgreen",  "calBclr": "lightsteelblue",  "calCclr": "cyan",  "calDclr": "magenta",  "calEclr": "purple"}
+          
+          cyear = int(cal.get("year"))
+          cmonth = 3
+          cday = 2
+          cal["startwk"] = int(datetime.date(cyear, cmonth, cday).strftime("%W"))
+          
+          glcal = calendar.Calendar(pref["startDay"])
+          days = [calendar.day_name[i] for i in glcal.iterweekdays()]
+          dts = []
+          dmt = []
+          for i in glcal.itermonthdates(cyear, cmonth):
+               dts.append( i.day )
+               dmt.append( i.month )
+          
+          numdays = len(dts)
+          
           colorsm = {"priormonth": "Orchid", "thisbefore": "Aqua",  "today": "Yellow",  "thismonth": "White",  "nextmonth": "Lime", "site":"Red" , "neutral": "silver", "calSclr": "red" }
-          cal = {"month":"March", "year":"2019", "startwk":8,"calrows":5, "calAt":"Liturgical", "calBt":"US Holidays","calCt":"Birdsall Family", "calDt":"Kirkup Family", "calEt":""}
-          pref = {  "startDay":1,  "calAclr": "yellowgreen",  "calBclr": "lightsteelblue",  "calCclr": "cyan",  "calDclr": "magenta",  "calEclr": "purple"}
-          dts = [25, 26, 27, 28, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2, 3, 4, 5, 6, 7  ]
+
+          #dts = [25, 26, 27, 28, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2, 3, 4, 5, 6, 7  ]
           tdy = []
           for i in range(0, 42,1):
                tdy.append({"bgtclr":"white","bgeclr":"white", "dnum":0, "devt":-1, "devt1t":"", "devt1c":"",  "devt2t":"", "devt2c":"",  "devt3t":"", "devt3c":"",  "devt4t":"", "devt4c":"", })
 
-          for i in range(0, 4):
-               tdy[i]["bgtclr"] = colorsm["priormonth"]
-               tdy[i]["bgeclr"] = colorsm["priormonth"]
-
-          for i in range(35, 42):
-               tdy[i]["bgtclr"] = colorsm["nextmonth"]
-               tdy[i]["bgeclr"] = colorsm["nextmonth"]
-
-          for i in range(0,42,1):
+          for i in range(0, numdays, 1):
                tdy[i]["dnum"] = dts[i]
-               
-          tdy[4]["bgtclr"] = colorsm["thisbefore"]
-          tdy[4]["beeclr"] = colorsm["thisbefore"]
-          tdy[5]["bgtclr"] = colorsm["today"]
-          tdy[5]["beeclr"] = colorsm["today"]
+               if (dmt[i] < cmonth):
+                    tdy[i]["bgtclr"] = colorsm["priormonth"]
+                    tdy[i]["bgeclr"] = colorsm["priormonth"]
+               elif (dmt[i] > cmonth ):
+                    tdy[i]["bgtclr"] = colorsm["nextmonth"]
+                    tdy[i]["bgeclr"] = colorsm["nextmonth"]
+               else:
+                    if (dts[i] < cday):
+                         tdy[i]["bgtclr"] = colorsm["thisbefore"]
+                         tdy[i]["beeclr"] = colorsm["thisbefore"]
+                    elif (dts[i] == cday):
+                         tdy[i]["bgtclr"] = colorsm["today"]
+                         tdy[i]["beeclr"] = colorsm["today"]
+                    else:
+                         tdy[i]["bgtclr"] = colorsm["thismonth"]
+                         tdy[i]["beeclr"] = colorsm["thismonth"]
+                    
 
           for  c in range(8):
                self.columnconfigure(c, pad=3)
@@ -131,7 +152,8 @@ class MCalendar(Frame):
           
           wom = Label(self, text="Week", font='serif, 10', bg="white", fg="black", height=1, width=6, borderwidth=3, relief="raised").grid(row=1, column=0)
           for x in range(7):
-               dow = Label(self, text=days[pref.get("startDay")+x], font='serif, 10', bg="white", fg="black", height=1, width=17, borderwidth=3, relief="raised").grid(row=1, column=x+1)
+               dow = Label(self, text=days[x], font='serif, 10', bg="white", fg="black", height=1, width=17, borderwidth=3, relief="raised").grid(row=1, column=x+1)
+
           
           # Weeks Display
           for r in range(1, cal.get("calrows")+1,1):
