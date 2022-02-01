@@ -101,16 +101,15 @@ class MCalendar(Frame):
           tdy[4]["devt"] = 1
           tdy[4]["dev1t"] =  "Bryan Kovas B'day"
           tdy[4]["dev1c"] = pref["calCclr"]
-          tdy[6]["devt"] = 1
+          tdy[6]["devt"] = 4
           tdy[6]["dev1t"] =  "Helen Birdsall B'day"
           tdy[6]["dev1c"] = pref["calCclr"]
-          tdy[6]["devt"] = 3
-          tdy[6]["dev1t"] =  "Greg Kovas B'day"
-          tdy[6]["dev1c"] = pref["calCclr"]
-          tdy[6]["dev2t"] =  "Brielle Balmer B'day"
+          tdy[6]["dev2t"] =  "Greg Kovas B'day"
           tdy[6]["dev2c"] = pref["calCclr"]
-          tdy[6]["dev3t"] =  "Andrew Noyes B'day"
+          tdy[6]["dev3t"] =  "Brielle Balmer B'day"
           tdy[6]["dev3c"] = pref["calCclr"]
+          tdy[6]["dev4t"] =  "Andrew Noyes B'day"
+          tdy[6]["dev4c"] = pref["calCclr"]
 
           tdy[9]["devt"] = 1
           tdy[9]["dev1t"] =  "Ash Wednesday"

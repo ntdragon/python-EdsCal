@@ -7,8 +7,14 @@ One of the goals is to use the same variable structure as the Jinja-HTML version
 Author: Edward Birdsall
 
 Variables:
+     Desired input to structuring page
+          hd, hdr, cal, pref
+     Internal:
+          dts = list of day numbers used to set up tdy[x]["dnum"]
+     Desired output to display the page
+     Descriptions
      hd:  Web/TC/Tk page
-     hdr: dictionary with calendar header infomration
+     hdr: dictionary with calendar header information
           name - name of calendar
           page - month year Calendar
           today - day of week and date of current day
@@ -45,7 +51,7 @@ Variables:
           calCclr - color for third calendar
           calDclr - color for fourth calendar
           calEclr - color for fifth calendar
-     dts = list of day numbers used to set up tdy[x]["dnum"]
+
 
 
 """
@@ -64,18 +70,61 @@ class MCalendar(Frame):
           #=========================================================================================================
           #Begining of definitions.  Need to remember how to split this into a seperate area that invokes MCalendar
           #=========================================================================================================
-          hd = {"loc":"Month Calendar"}
-          hdr = { "name":"Ed",  "page":"March 2019 Calendar", "today":"Saturday  March  2, 2019" }
-          
-          cal = {"month":"March", "year":"2019", "startwk":0,"calrows":5, "calAt":"Liturgical", "calBt":"US Holidays","calCt":"Birdsall Family", "calDt":"Kirkup Family", "calEt":""}
-          pref = {  "startDay":0,  "calAclr": "yellowgreen",  "calBclr": "lightsteelblue",  "calCclr": "cyan",  "calDclr": "magenta",  "calEclr": "purple"}
-          
-          cyear = int(cal.get("year"))
+          #=================================
+          # desired inputs for final version what, when, which event calendars, preferences
+          #=================================
+          inputs = {"name":"Ed", "date":"March 2, 2019", "startDay":0,}
+          #========================================================
+          # some kludges for testing and until I get it all working
+          #========================================================
+          #cyear = int(cal.get("year"))
+          cyear = 2019
           cmonth = 3
           cday = 2
-          cal["startwk"] = int(datetime.date(cyear, cmonth, cday).strftime("%W"))
+          cals= [
+               dict(num=0, name="Liturgical", color="yellowgreen"),
+               dict(num=1, name="US Holidays", color="lightsteelblue"),
+               dict(num=2, name="Birdsall Family", color="cyan"),
+               dict(num=3, name="Kirkup Family",color="magenta"),
+               dict(num=4, name="", color="purple"),
+               dict(num=5, name="Site")
+          ]
+          eventCal = [
+               dict(num=0, cal="Birdsall Family", startDate="March 01, 2019", title="Bryan Kovas B'Day" ),
+               dict(num=1, cal="Birdsall Family", startDate="March 03, 2019", title="Greg Kovas B'Day"),
+               dict(num=2, cal="Birdsall Family", startDate="March 03, 2019", title="Helen Birdsall B'Day"),
+               dict(num=3, cal="Birdsall Family", startDate="March 03, 2019", title="Andrew Noyes B'Day"),
+               dict(num=4, cal="Birdsall Family", startDate="March 03, 2019", title="Brielle Balmer B'Day"),
+               dict(num=5, cal="Liturgical", startDate="March 03, 2019", title="Ordinary 9th Sunday"),
+               dict(num=6, cal="Liturgical", startDate="March 6, 2019", title="Ash Wednesday"),
+               dict(num=7, cal="US Holidays", startDate="March 10, 2019", title="DST begins"),
+               dict(num=8, cal="Liturgical", startDate="March 10, 2019", title="Lent 1st Sunday"),
+               dict(num=9, cal="Liturgical", startDate="March 17, 2019", title="Lent 2nd Sunday"),
+               dict(num=10, cal="Liturgical", startDate="March 24, 2019", title="Lent 3rd Sunday"),
+               dict(num=11, cal="Liturgical", startDate="March 31, 2019", title="Lent 4th Sunday")
+          ]
+
+          #===================================
+          # Working code towards final version
+          #===================================
+          hd = {"loc":"Month Calendar"}
+          hdr["name"] = inputs["name"]
+          hdr["page"] = inputs["date"].strftime("%B %Y")+" Calendar"
+          #hdr["today"] = datetime.datetime.now().strftime("%A %B %d, %Y")
+          hdr["today"] = "Saturday March 02, 2019"
+          #hdr = { "name":"Ed",  "page":"March 2019 Calendar", "today":"Saturday  March  2, 2019" }
           
-          glcal = calendar.Calendar(pref["startDay"])
+          #cal = {"month":"March", "year":"2019", "startwk":0,"calrows":5, "calAt":"Liturgical", "calBt":"US Holidays",
+          #      "calCt":"Birdsall Family", "calDt":"Kirkup Family", "calEt":""}
+          #pref = {  "startDay":0,  "calAclr": "yellowgreen",  "calBclr": "lightsteelblue",  "calCclr": "cyan",  "calDclr": "magenta",  "calEclr": "purple"}
+          
+          
+          if (inputs["startDay"] == 6)  #Week starts on Sunday
+               cal["startwk"] = int(datetime.date(cyear, cmonth, cday).strftime("%U"))
+          else                        #Week starts on Monday
+               cal["startwk"] = int(datetime.date(cyear, cmonth, cday).strftime("%W"))
+          
+          glcal = calendar.Calendar(inputs["startDay"])
           days = [calendar.day_name[i] for i in glcal.iterweekdays()]
           dts = []
           dmt = []
@@ -87,7 +136,6 @@ class MCalendar(Frame):
           
           colorsm = {"priormonth": "Orchid", "thisbefore": "Aqua",  "today": "Yellow",  "thismonth": "White",  "nextmonth": "Lime", "site":"Red" , "neutral": "silver", "calSclr": "red" }
 
-          #dts = [25, 26, 27, 28, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2, 3, 4, 5, 6, 7  ]
           tdy = []
           for i in range(0, 42,1):
                tdy.append({"bgtclr":"white","bgeclr":"white", "dnum":0, "devt":-1, "devt1t":"", "devt1c":"",  "devt2t":"", "devt2c":"",  "devt3t":"", "devt3c":"",  "devt4t":"", "devt4c":"", })
