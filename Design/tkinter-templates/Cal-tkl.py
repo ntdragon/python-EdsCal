@@ -74,7 +74,7 @@ class MCalendar(Frame):
           dts = [25, 26, 27, 28, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2, 3, 4, 5, 6, 7  ]
           tdy = []
           for i in range(0, 42,1):
-               tdy.append({"bgtclr":"white","bgeclr":"white", "dnum":0, "devt":-1, "devt1t":"", "devt1c":"",  "devt2t":"", "devt2c":"",  "devt3t":"", "devt3c":"",  "devt4t":"", "devt4c":"", })
+               tdy.append({"bgtclr":"white","bgeclr":"white", "dnum":0, "devt":-1, "dev1t":"", "dev1c":"gray90",  "dev2t":"", "dev2c":"gray90",  "dev3t":"", "dev3c":"gray90",  "dev4t":"", "dev4c":"gray90", })
 
           for i in range(0, 4):
                tdy[i]["bgtclr"] = colorsm["priormonth"]
@@ -117,7 +117,7 @@ class MCalendar(Frame):
           tdy[13]["devt"] = 1
           tdy[13]["dev1t"] =  "DST begins"
           tdy[13]["dev1c"] = pref["calBclr"]
-          tdy[21]["devt"] = 1
+
           #=========================================================================================================
           #Ending of definitions.  Need to remember how to split this into a seperate area that invokes MCalendar
           #=========================================================================================================

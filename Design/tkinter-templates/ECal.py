@@ -108,20 +108,21 @@ class MCalendar(Frame):
           # Working code towards final version
           #===================================
           hd = {"loc":"Month Calendar"}
+          hdr = { "name":"Ed",  "page":"March 2019 Calendar", "today":"Saturday  March  2, 2019" }
           hdr["name"] = inputs["name"]
-          hdr["page"] = inputs["date"].strftime("%B %Y")+" Calendar"
+          #hdr["page"] = inputs["date"].datetime.strptime("%B %Y")+" Calendar"
           #hdr["today"] = datetime.datetime.now().strftime("%A %B %d, %Y")
           hdr["today"] = "Saturday March 02, 2019"
-          #hdr = { "name":"Ed",  "page":"March 2019 Calendar", "today":"Saturday  March  2, 2019" }
+
           
-          #cal = {"month":"March", "year":"2019", "startwk":0,"calrows":5, "calAt":"Liturgical", "calBt":"US Holidays",
-          #      "calCt":"Birdsall Family", "calDt":"Kirkup Family", "calEt":""}
-          #pref = {  "startDay":0,  "calAclr": "yellowgreen",  "calBclr": "lightsteelblue",  "calCclr": "cyan",  "calDclr": "magenta",  "calEclr": "purple"}
+          cal = {"month":"March", "year":"2019", "startwk":0,"calrows":5, "calAt":"Liturgical", "calBt":"US Holidays",
+                "calCt":"Birdsall Family", "calDt":"Kirkup Family", "calEt":""}
+          pref = {  "startDay":0,  "calAclr": "yellowgreen",  "calBclr": "lightsteelblue",  "calCclr": "cyan",  "calDclr": "magenta",  "calEclr": "purple"}
           
           
-          if (inputs["startDay"] == 6)  #Week starts on Sunday
+          if (inputs["startDay"] == 6):  # Week starts on Sunday
                cal["startwk"] = int(datetime.date(cyear, cmonth, cday).strftime("%U"))
-          else                        #Week starts on Monday
+          else:                        #Week starts on Monday
                cal["startwk"] = int(datetime.date(cyear, cmonth, cday).strftime("%W"))
           
           glcal = calendar.Calendar(inputs["startDay"])
@@ -138,7 +139,7 @@ class MCalendar(Frame):
 
           tdy = []
           for i in range(0, 42,1):
-               tdy.append({"bgtclr":"white","bgeclr":"white", "dnum":0, "devt":-1, "devt1t":"", "devt1c":"",  "devt2t":"", "devt2c":"",  "devt3t":"", "devt3c":"",  "devt4t":"", "devt4c":"", })
+               tdy.append({"bgtclr":"white","bgeclr":"white", "dnum":0, "devt":-1, "dev1t":"", "dev1c":"gray85", "dev1e":"",  "dev2t":"", "dev2c":"gray85", "dev2e":"", "dev3t":"", "dev3c":"gray85", "dev3e":"", "dev4t":"", "dev4c":"grey85", "dev4e":"", })
 
           for i in range(0, numdays, 1):
                tdy[i]["dnum"] = dts[i]
@@ -169,24 +170,36 @@ class MCalendar(Frame):
           tdy[4]["devt"] = 1
           tdy[4]["dev1t"] =  "Bryan Kovas B'day"
           tdy[4]["dev1c"] = pref["calCclr"]
-          tdy[6]["devt"] = 1
+          tdy[4]["dev1e"] = "cmd"
+          tdy[6]["devt"] = 4
           tdy[6]["dev1t"] =  "Helen Birdsall B'day"
           tdy[6]["dev1c"] = pref["calCclr"]
-          tdy[6]["devt"] = 3
-          tdy[6]["dev1t"] =  "Greg Kovas B'day"
-          tdy[6]["dev1c"] = pref["calCclr"]
-          tdy[6]["dev2t"] =  "Brielle Balmer B'day"
+          tdy[6]["dev1e"] = "cmd"
+          tdy[6]["dev2t"] =  "Greg Kovas B'day"
           tdy[6]["dev2c"] = pref["calCclr"]
-          tdy[6]["dev3t"] =  "Andrew Noyes B'day"
+          tdy[6]["dev2e"] = "cmd"
+          tdy[6]["dev3t"] =  "Brielle Balmer B'day"
           tdy[6]["dev3c"] = pref["calCclr"]
-
-          tdy[9]["devt"] = 1
+          tdy[6]["dev3e"] = "cmd"
+          tdy[6]["dev4t"] =  "Andrew Noyes B'day"
+          tdy[6]["dev4c"] = pref["calCclr"]
+          tdy[6]["dev4e"] = "cmd"
+          tdy[9]["devt"] = 0
           tdy[9]["dev1t"] =  "Ash Wednesday"
           tdy[9]["dev1c"] = pref["calAclr"]
-          tdy[13]["devt"] = 1
+          tdy[13]["devt"] = 0
           tdy[13]["dev1t"] =  "DST begins"
           tdy[13]["dev1c"] = pref["calBclr"]
-          tdy[21]["devt"] = 1
+          tdy[14]["devt"] = 0
+          tdy[14]["dev1t"] =  "Lent 1st Sunday"
+          tdy[14]["dev1c"] = pref["calAclr"]
+          tdy[21]["devt"] = 0
+          tdy[21]["dev1t"] =  "Lent 2nd Sunday"
+          tdy[21]["dev1c"] = pref["calAclr"]
+          tdy[28]["devt"] = 0
+          tdy[28]["dev1t"] =  "Lent 3rd Sunday"
+          tdy[28]["dev1c"] = pref["calAclr"]
+          
           #=========================================================================================================
           #Ending of definitions.  Need to remember how to split this into a seperate area that invokes MCalendar
           #=========================================================================================================
@@ -208,10 +221,22 @@ class MCalendar(Frame):
                wom =  Label(self, text=cal.get("startwk")+(r-1), background="white", foreground="black", width=8,  borderwidth=3, relief="raised").grid(row=2+((r-1)*5), column=0)
                for d in range(1,8,1):
                     dow = Label(self, text=tdy[(((r-1)*7)+(d-1))].get("dnum"),background=tdy[(((r-1)*7)+(d-1))].get("bgtclr"), width=17, relief="groove").grid(row=(2+((r-1)*5)), column=d)
-                    dow1 = Button(self, text=tdy[(((r-1)*7)+(d-1))].get("dev1t"), bg=tdy[(((r-1)*7)+(d-1))].get("dev1c"), width=15, state=NORMAL, command="").grid(row=(3+((r-1)*5)), column=d)
-                    dow2 = Button(self, text=tdy[(((r-1)*7)+(d-1))].get("dev2t"), bg=tdy[(((r-1)*7)+(d-1))].get("dev2c"), width=15, state=NORMAL, command="").grid(row=(4+((r-1)*5)), column=d)
-                    dow3 = Button(self, text=tdy[(((r-1)*7)+(d-1))].get("dev3t"), bg=tdy[(((r-1)*7)+(d-1))].get("dev3c"), width=15, state=NORMAL, command="").grid(row=(5+((r-1)*5)), column=d)
-                    dow4 = Button(self, text=tdy[(((r-1)*7)+(d-1))].get("dev4t"), bg=tdy[(((r-1)*7)+(d-1))].get("dev4c"), width=15, state=NORMAL, command="").grid(row=(6+((r-1)*5)), column=d)
+                    if len(tdy[(((r-1)*7)+(d-1))].get("dev1e")) >0:
+                         dow1 = Button(self, text=tdy[(((r-1)*7)+(d-1))].get("dev1t"), bg=tdy[(((r-1)*7)+(d-1))].get("dev1c"), width=15, state=NORMAL, command="").grid(row=(3+((r-1)*5)), column=d)
+                    else:
+                         dow1 = Label(self, text=tdy[(((r-1)*7)+(d-1))].get("dev1t"), background=tdy[(((r-1)*7)+(d-1))].get("dev1c"), width=17, relief="ridge").grid(row=(3+((r-1)*5)), column=d)
+                    if len(tdy[(((r-1)*7)+(d-1))].get("dev2e")) >0:
+                         dow2 = Button(self, text=tdy[(((r-1)*7)+(d-1))].get("dev2t"), bg=tdy[(((r-1)*7)+(d-1))].get("dev2c"), width=15, state=NORMAL, command="").grid(row=(4+((r-1)*5)), column=d)
+                    else:
+                         dow2 = Label(self, text=tdy[(((r-1)*7)+(d-1))].get("dev2t"), background=tdy[(((r-1)*7)+(d-1))].get("dev2c"), width=17, relief="ridge").grid(row=(4+((r-1)*5)), column=d)
+                    if len(tdy[(((r-1)*7)+(d-1))].get("dev3e")) >0:
+                         dow3 = Button(self, text=tdy[(((r-1)*7)+(d-1))].get("dev3t"), bg=tdy[(((r-1)*7)+(d-1))].get("dev3c"), width=15, state=NORMAL, command="").grid(row=(5+((r-1)*5)), column=d)
+                    else:
+                         dow3 = Label(self, text=tdy[(((r-1)*7)+(d-1))].get("dev3t"), background=tdy[(((r-1)*7)+(d-1))].get("dev3c"), width=17, relief="ridge").grid(row=(5+((r-1)*5)), column=d)
+                    if len(tdy[(((r-1)*7)+(d-1))].get("dev4e")) >0:
+                         dow4 = Button(self, text=tdy[(((r-1)*7)+(d-1))].get("dev4t"), bg=tdy[(((r-1)*7)+(d-1))].get("dev4c"), width=15, state=NORMAL, command="").grid(row=(6+((r-1)*5)), column=d)
+                    else:
+                         dow4 = Label(self, text=tdy[(((r-1)*7)+(d-1))].get("dev4t"), background=tdy[(((r-1)*7)+(d-1))].get("dev4c"), width=17, relief="ridge").grid(row=(6+((r-1)*5)), column=d)
 
           
           #Bottom of Page

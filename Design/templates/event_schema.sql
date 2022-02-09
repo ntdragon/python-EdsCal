@@ -7,7 +7,7 @@
 create table usercal (
      id                    integer primary key autoincrement not null,
      user_id        ?,
-     iday           integer,       --initial day of week Sunday =0 Monday=1 unix style
+     iday           integer,       --initial day of week Monday=0 Sunday=6 unix style
      cals           text,  --list of calendars in use
      ccals          text, --list of calendar colors in order?
      colors         ?
