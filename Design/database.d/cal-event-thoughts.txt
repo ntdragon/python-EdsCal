@@ -1,0 +1,38 @@
+Calendar event thoughts
+
+Calendar - which type
+
+which calendar
+title
+location
+category?
+start
+end
+repeat?
+     repeat rules
+     end condition
+description
+
+Project
+which calendar
+title
+location
+category
+start
+Due date
+Status %complete
+repeat
+description
+phases
+tasks
+
+Tasks
+which calendar
+title
+location
+category
+start
+Due date
+Status %complete
+repeat
+description
