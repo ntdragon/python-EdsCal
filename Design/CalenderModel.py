@@ -69,7 +69,7 @@ class Cal(Calendar)
 Calendar methods and objects for the WishList application.     
 """     
      
-     def PrepareBareCalendarDisplay(month, year, day, weekstart):
+     def PrepareBareCalendarDisplay(month, year, weekStart):
      """
      This prepares the variables for use in either the HTML or Tkinter displays
      This uses the Gregorian Calendar and is meant for current years
@@ -79,45 +79,45 @@ Calendar methods and objects for the WishList application.
           for even week
      """
 
-     days = ('Sunday Monday Tuesday Wednesday Thursday Friday Saturday Sunday'.split())
-     colorsm = {"priormonth": "Orchid", "thisbefore": "Aqua",  "today": "Yellow", \
-                "thismonth": "White",  "nextmonth": "Lime", "site":"Red" , "neutral": "silver", \
-                "calSclr": "red" }
-     a_cal = calendar(month, year)
-     priorMonth =
-     nextMonth =
-     initial_yearDayNumber = 
+     #days = ('Sunday Monday Tuesday Wednesday Thursday Friday Saturday Sunday'.split())
+     colorsm = {"priormonth":"Orchid", "thismonth":"White", "nextmonth": "Lime"}
+     cal = {"month":"January", "year":"2000", "startwk":0, "calrows":0, }
+     if (weekStart == 6):  # Week starts on Sunday
+          cal["startwk"] = int(datetime.date(cyear, cmonth, cday).strftime("%U"))
+     else:                        #Week starts on Monday
+          cal["startwk"] = int(datetime.date(cyear, cmonth, cday).strftime("%W"))
+
+     glcal = calendar.Calendar(inputs["weekStart"])
+     days = [calendar.day_name[i] for i in glcal.iterweekdays()]
+     dts = []
+     dmt = []
+     for i in glcal.itermonthdates(cyear, cmonth):
+          dts.append( i.day )
+          dmt.append( i.month )
+     numdays = len(dts)
+ 
      cal["month"] = month
      cal["year"] = year
-     cal["startwk"] = a_cal.wknum
-     cal["calrows"] = len(a_cal)/7
-     pref["startDay"] = weekstart
+     cal["calrows"] = numdays//7
+     #pref["startDay"] = weekstart
      tdy = []
      for i in range(0, len(a_cal),1):
           tdy.append({"yearDayNumber":"1", "bgtclr":"white","bgeclr":"white", "dnum":0, "devt":0,\
                       "devt1t":"", "devt1c":"",  "devt2t":"", "devt2c":"",  "devt3t":"", \
                       "devt3c":"", "devt4t":"", "devt4c":"", })
      
-     for i in range(0,len(a_cal),1):
-          tdy[i]["yearDayNumber"] = initial_yearDayNumber + i
-          tdy[i]["dnum"] = a_cal[i][day]
-          case a_cal[i]["month]
-               priorMonth)
-                    tdy[i]["bgtclr"] = colorsm["priormonth"]
-                    tdy[i]["bgeclr"] = colorsm["priormonth"]
-               thisMonth)
-                    tdy[i]["bgtclr"] = colorsm["thisbefore"]
-                    tdy[i]["beeclr"] = colorsm["thisbefore"]
-                    today
-                    tdy[i]["bgtclr"] = colorsm["today"]
-                    tdy[i]["beeclr"] = colorsm["today"]
-                    after today
-                    tdy[i]["bgtclr"] = colorsm["thisafter"]
-                    tdy[i]["beeclr"] = colorsm["thisafter"]
-               nextMonth)
-                    tdy[i]["bgtclr"] = colorsm["nextmonth"]
-                    tdy[i]["bgeclr"] = colorsm["nextmonth"]
-          esac
+     for i in range(0, numdays, 1):
+     tdy[i]["mnum"] = dmt[i]
+     tdy[i]["dnum"] = dts[i]
+     if (dmt[i] < cmonth):
+          tdy[i]["bgtclr"] = colorsm["priormonth"]
+          tdy[i]["bgeclr"] = colorsm["priormonth"]
+     elif (dmt[i] > cmonth ):
+          tdy[i]["bgtclr"] = colorsm["nextmonth"]
+          tdy[i]["bgeclr"] = colorsm["nextmonth"]
+     else:
+          tdy[i]["bgtclr"] = colorsm["thismonth"]
+          tdy[i]["beeclr"] = colorsm["thismonth"]
 
      pass
 
@@ -140,5 +140,16 @@ Calendar methods and objects for the WishList application.
      For the Wish List events are all day events like birthdays or holidays.
      """
      pass
+     
+     def ThisYearLiturgicalCalendar(year);
+     """
+     This sets the Liturgical calendar for a given year.  Note that it contains more information than the
+     normal eventCalendar.
+     """
+     #import calendar
+     #import dateutil
+     #import datetime
+     pass
+     
      
      

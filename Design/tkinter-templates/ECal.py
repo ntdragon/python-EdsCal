@@ -1,58 +1,13 @@
 #!/usr/bin/env python3
 
 """
-calender ui using TCL/TK to match what is on gift exchange
-One of the goals is to use the same variable structure as the Jinja-HTML versions.
-
-Author: Edward Birdsall
-
-Variables:
-     Desired input to structuring page
-          hd, hdr, cal, pref
-     Internal:
-          dts = list of day numbers used to set up tdy[x]["dnum"]
-     Desired output to display the page
-     Descriptions
-     hd:  Web/TC/Tk page
-     hdr: dictionary with calendar header information
-          name - name of calendar
-          page - month year Calendar
-          today - day of week and date of current day
-     days:days of week
-     colorsm - dictionary with colors for background of dates
-          priormonth, thisbefore, today, thismonth, nextmonth, site, neutral, calSclr
-     tdy - dictionary array of information for the days to be displayed
-          bgtclr - background today clear
-          bgeclr - background event clear
-          dnum - day number
-          devt - number of day's events
-          devt1t - day event today first title
-          devt1c - day event today first calendar color
-          devt2t - day event today second title
-          devt2c - day event today second calendar color
-          devt3t - day event today third title
-          devt3c - day event today third calendar color
-          devt4t - day event today fourth title
-          devt4c - day event today fourth calendar color
-     cal - calendar display and control information
-          month - Display Month
-          year - Display Year
-          startwk - week number for first display week
-          calrows - number of rows of calendar to be displayed
-          calAt - name of first calendar
-          calBt - name of second calendar
-          calCt - name of third calendar
-          calDt - name of fourth calendar
-          calEt - name of fifth calendar
-     pref - dictionary of user preferences
-          startDay - the starting day of the week 1=Monday, 0 or 7 is Sunday
-          calAclr - color for first calendar
-          calBclr - color for second calendar
-          calCclr - color for third calendar
-          calDclr - color for fourth calendar
-          calEclr - color for fifth calendar
-
-
+=======================
+Ed's Calendar - Tkinter
+=======================
+:Description: Ed's calendar using Tkinter as user interface and procedural python3
+:Author: Edward Birdsall
+:Date: 2022 March 30
+:Version: 0.1
 
 """
 import calendar
@@ -271,7 +226,7 @@ class MCalendar(Frame):
           cc = Label(self)
           cc.grid(row=brow+5, columnspan=8,  sticky=W+E)
           lbl0 = Label(self, text=" ").grid(row=brow+6,column=0)
-          brt = Button(self,text="Return", command="").grid(row=brow+6, column=1)
+          brt = Button(self,text="Return", command=self.quit).grid(row=brow+6, column=1)
           lbl1 = Label(self, text=" ").grid(row=brow+6,column=2)
           bbk = Button(self,text="Prior Month", command="").grid(row=brow+6, column=3)
           bpp = Button(self, text="Print Page", command="").grid(row=brow+6, column=4)
@@ -289,3 +244,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
